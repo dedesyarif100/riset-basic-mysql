@@ -1,0 +1,14 @@
+Programmer Zaman Now MYSQL, Update Data :
+- ALTER TABLE products
+- ADD COLUMN category ENUM('Makanan', 'Minuman', 'Lain-lain')
+AFTER name;
+
+- UPDATE products SET 
+category = 'Makanan', 
+description = 'Mie Ayam Original + Ceker' 
+WHERE id = 'P0003';
+
+- UPDATE products SET 
+price = price + 2500,
+quantity = quantity - 2
+WHERE id = 'P0005';

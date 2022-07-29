@@ -1,0 +1,276 @@
+MYSQL TRIGGER
+METDOD |   OLD   | NEW  |
+-------------------------------
+INSERT     |     x      |    v     |
+UPDATE    |     v      |    v     |
+DELETE     |     v      |    x     |
+
+#2. MySQL Trigger Tutorial #2 | Create Trigger :
+-- delimiter |
+-- CREATE TRIGGER update_employee_log
+--     before update
+--     on employee
+--     for each row
+-- begin
+--         insert into employee_log
+--         set employee_id = OLD.employee_id,
+-- 	old_nama_depan = OLD.nama_depan,
+--         new_nama_depan = NEW.nama_depan,
+--         change_date = now();
+-- end;
+-- |
+-- delimiter ;
+
+-- DROP TRIGGER update_employee_log
+
+#3. MySQL Trigger Tutorial #3 | Show, Edit dan Drop Trigger :
+-- SHOW TRIGGERS IN COBA_TRIGGER LIKE 'employee';
+-- DROP TRIGGER trigger_name_new
+-- SHOW TRIGGERS LIKE 'EMPLOYEE';
+-- SHOW TRIGGERS FROM COBA_TRIGGER WHERE `Table` = 'employee';
+-- SHOW TRIGGERS FROM COBA_TRIGGER WHERE `event` = 'UPDATE';
+-- SELECT * FROM employee_log
+
+-- LOCK TABLES employee WRITE;
+-- DROP TRIGGER update_employee_log;
+
+-- delimiter |
+-- CREATE TRIGGER trigger_name_new
+--     before update
+--     on employee
+--     for each row
+-- begin
+-- 	insert into employee_log
+--         set employee_id = OLD.employee_id,
+-- 	old_nama_depan = OLD.nama_depan,
+--         new_nama_depan = NEW.nama_depan,
+--         change_date = now();
+-- end;
+-- |
+-- delimiter ;
+-- UNLOCK TABLES;
+
+-- SELECT * FROM employee_log;
+-- UPDATE employee SET nama_depan = 'Dede Syarifudin Hidayat' WHERE employee_id = 1;
+
+#4. MySQL Trigger Tutorial #4 | Trigger Before dan After Insert :
+// tidak bisa mengambil data old
+// before insert kita bisa ubah data yang akan di insert
+// after insert kita tidak bisa ubah data yang di generate MYSQL
+
+-- delimiter |
+-- CREATE TRIGGER trigger_employee_before_insert
+--     before insert
+--     on employee
+--     for each row
+-- begin
+-- 	if new.capacity < 5 then
+-- 		set new.capacity=10;
+-- 	end if;
+-- end;
+-- |
+-- delimiter ;
+
+-- INSERT INTO employee (nama_depan, nama_tengah, nama_belakang, alamat, tlp, capacity) 
+-- 	VALUES ('Test Data 2', null, null, 'Jakarta Barat' , '12345', 4)
+// Jika Query ini dijalankan, maka akan bernilai 10, karna dalam Triggernya, sudah ditentukan jika nilai kurang dari 5, maka akan di set menjadi 10
+
+-- CREATE TABLE employee_count (
+--     id int PRIMARY KEY AUTO_INCREMENT,
+--     jumlah int,
+--     tanggal datetime
+-- )
+
+CREATE TRIGGER trigger_employee_after_insert
+        after insert
+        on employee
+        for each row
+begin
+        declare paramet int default 0;
+        select count(*) into paramet from employee_count
+        if paramet > 0 then
+               update employee_count set jumlah = jumlah + new.capacity, tanggal = now() WHERE id = 1;
+        else 
+               insert into employee_count (jumlah, tanggal) VALUES (new.capacity, now());
+        end if;
+end;
+ 
+
+#5. MySQL Trigger Tutorial #5 | Trigger Before & After Update :
+// Kita bisa mengambil OLD data dan NEW data
+// Trigger Before Update, kita bisa mengubah value data
+// Trigger After Update, kita tidak bisa mengubah value 
+
+
+-- delimiter |
+-- create trigger trigger_before_update
+--         before update
+--         on employee
+--         for each row
+-- begin
+--         if new.capacity < 5 then
+-- 			set new.capacity = 8;
+-- 		end if;
+-- end;
+-- |
+-- delimiter ;
+
+
+-- delimiter |
+-- create trigger trigger_after_update
+--         after update
+--         on employee
+--         for each row
+-- begin
+--         insert into employee_log
+--         set employee_id = OLD.employee_id,
+-- 			old_nama_depan = OLD.nama_depan,
+--             new_nama_depan = NEW.nama_depan,
+--             old_capacity = OLD.capacity,
+--             new_capacity = NEW.capacity,
+--             change_date = now();
+-- end;
+-- |
+-- delimiter ;
+
+
+-- SELECT * FROM employee
+-- SELECT * FROM employee_log
+-- SHOW CREATE TABLE employee_log
+
+-- UPDATE employee SET nama_depan = 'Dede Software engineer', capacity = 3 WHERE employee_id = 1
+
+
+#6. MySQL Trigger Tutorial #6 | Trigger Before & After Delete :
+Before Delete Trigger :
+// Bisa mengambil Data OLD
+// Tidak ada data New
+// Tidak bisa mengedit value
+
+After Delete Trigger :
+// Bisa mengambil Data OLD
+// Tidak ada data New
+// Tidak bisa mengedit value
+
+Apa Perbedaannya ?
+// Before delete trigger bisa join ke tabel yang di delete
+// After delete trigger tidak bisa
+
+-- delimiter |
+-- create trigger trigger_before_delete
+--         before delete
+--         on salary
+--         for each row
+-- begin
+--         declare data int default 0;
+--         select count(*) into data from salary where emp_id = old.emp_id;
+--         if data > 0 then
+-- 			insert into salary_history
+-- 			set emp_id = old.emp_id,
+-- 			effective_date = old.effective_date,
+--                 amount = old.amount,
+--                 deleted_at = now();
+-- 		end if;
+-- end;
+-- |
+-- delimiter ;
+
+
+-- delimiter |
+-- create trigger trigger_after_delete
+--         after delete
+--         on salary
+--         for each row
+-- begin
+--         declare data int default 0;
+--         select count(*) into data from salary where emp_id = old.emp_id;
+--         if data > 0 then
+-- 			insert into salary_history
+-- 			set emp_id = old.emp_id,
+-- 			effective_date = old.effective_date,
+--                 amount = old.amount,
+--                 deleted_at = now();
+-- 		end if;
+-- end;
+-- |
+-- delimiter ;
+
+
+-- DELETE FROM salary WHERE emp_id = 1111
+-- SELECT * FROM salary_history
+-- SELECT * FROM salary
+
+
+#7. MySQL Trigger Tutorial #7 | Create Multiple Trigger :
+-- INSERT INTO barang (barcode, nama, harga) 
+-- 	VALUES ('11111', 'Sepeda', 200000),
+-- 	('22222', 'Elektronik', 300000),
+--          ('33333', 'Rumah', 300000);
+
+
+-- CREATE TABLE barang_log (
+-- 	id INT PRIMARY KEY AUTO_INCREMENT,
+--     barang_id INT,
+--     old_harga decimal(12,2),
+--     new_harga decimal(12,2),
+--     perubahan DATETIME DEFAULT current_timestamp ON UPDATE current_timestamp
+-- )
+
+
+-- CREATE TABLE user_log (
+-- 	id INT PRIMARY KEY AUTO_INCREMENT,
+--     barang_id INT,
+--     user VARCHAR(100),
+--     perubahan DATETIME DEFAULT current_timestamp ON UPDATE current_timestamp
+-- )
+
+
+-- delimiter |
+-- create trigger trigger_before_update_1
+-- 	before update
+-- 	on barang
+-- 	for each row
+-- begin
+-- 	INSERT INTO barang_log SET 
+-- 		barang_id = old.barang_id,
+-- 		old_barcode = old.barcode,
+-- 		new_barcode = new.barcode,
+-- 		old_nama = old.nama,
+-- 		new_nama = new.nama,
+-- 		old_harga = old.harga,
+-- 		new_harga = new.harga,
+-- 		old_kategori = old.kategori,
+-- 		new_kategori = new.kategori;
+-- end;
+-- |
+-- delimiter ;
+
+
+-- delimiter |
+-- create trigger trigger_before_update_2
+-- 	before update
+-- 	on barang
+-- 	for each row
+-- begin
+-- 	if old.harga != new.harga THEN
+-- 	       INSERT INTO user_log
+-- 	       SET barang_id = old.barang_id,
+-- 			user = user();
+-- 	end if;
+-- end;
+-- |
+-- delimiter ;
+
+
+-- SELECT * FROM barang
+
+-- UPDATE barang SET barcode = 11, nama = 'LED', harga = 220000, kategori = 'Teknologi' WHERE barang_id = 1;
+
+-- SELECT * FROM barang_log
+-- SELECT * FROM user_log
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+Materi MYSQL Programmer Zaman Now, Jenis-Jenis Join :
+- INSERT INTO categories(id, name)
+VALUES  ('C0004', 'Oleh-Oleh'),
+	('C0005', 'Gadget');
+- INSERT INTO products(id, name, price, quantity)
+VALUES  ('X0001', 'X Satu', 25000, 200),
+	('X0002', 'X Due', 10000, 300),
+	('X0003', 'X Tiga', 15000, 500);
+- SELECT * FROM categories INNER JOIN products ON (products.id_categories = categories.id)
+
+
+- SELECT * FROM categories JOIN products ON (products.id_categories = categories.id)
+- SELECT quickpay_no, bill_id FROM quick_pays JOIN payment ON (payment.quick_pay_id = quick_pays.id);
+- SELECT donation_no, donation_id FROM donation JOIN payment ON (donation.id = payment.donation_id);
+- SELECT * FROM payment 
+JOIN donation ON (payment.donation_id = donation.id)
+JOIN transactions ON (payment.transaction_id = transactions.id);
+
+
+- SELECT * FROM categories LEFT JOIN products ON (products.id_categories = categories.id)
+- SELECT * FROM categories RIGHT JOIN products ON (products.id_categories = categories.id)

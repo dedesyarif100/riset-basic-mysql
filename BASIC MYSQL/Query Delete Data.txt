@@ -1,0 +1,3 @@
+Programmer Zaman Now MYSQL, Delete Data :
+- DELETE FROM products WHERE id = 'P0009'
+- DELETE FROM namatable WHERE id = 2

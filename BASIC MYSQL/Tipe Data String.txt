@@ -1,0 +1,9 @@
+Programmer Zaman Now MYSQL, Tipe Data String :
+1. CHAR		=> CHAR(4) = '    '
+2. VARCHAR	=> VARCHAR(4) = ''
+		=> VARCHAR(4) === 'abcd'
+3. TEXT	=> TINYTEXT	= MAX 255 Karakter
+	=> TEXT		= MAX 65535 Karakter
+	=> MEDIUMTEXT	= MAX 16777215 Karakter
+	=> LONGTEXT	= MAX 4294967295 Karakter
+4. ENUM => ('Pria','Wanita) artinya hanya bisa menerima data Pria atau Wanita

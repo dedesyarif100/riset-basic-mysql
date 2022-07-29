@@ -1,0 +1,30 @@
+RESULT SOAL TEST MYSQL ( PT ACE INDONESIA ) :
+SOAL 1 :
+	SELECT name AS Employee FROM employees 
+	WHERE salary = 
+	( 
+		SELECT MAX(salary) FROM employees 
+		WHERE manager_id = 3 
+	)
+
+
+
+
+SOAL 2 :
+	SELECT max(salary) AS SecondHighestSalary FROM Employee 
+	WHERE (salary <= 250 && salary >= 150)
+
+
+
+
+SOAL 3 :
+	SELECT class FROM 
+	(
+		SELECT COUNT(class) AS jml, class FROM Courses 
+		GROUP BY Class HAVING jml >= 5 
+	) AS c
+
+
+	opsi kedua :
+	# SELECT class, COUNT(class) AS jml FROM Courses 
+	# GROUP BY Class HAVING jml > 5

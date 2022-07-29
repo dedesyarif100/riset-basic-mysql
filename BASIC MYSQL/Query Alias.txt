@@ -1,0 +1,41 @@
+Programmer Zaman Now MYSQL, Alias :
+Alias Kolom :
+- SELECT namaKolom AS aliasKolom,
+	namaKolom AS aliasKolom,
+        namaKolom AS aliasKolom,
+        namaKolom AS aliasKolom,
+        namaKolom AS aliasKolom,
+FROM namaTable
+
+Jika alias 1 kata, tanpa petik tidak akan error :
+- SELECT id AS Kode,
+	name AS Nama,
+        category AS Kategori,
+        price AS Harga,
+        quantity AS Jumlah
+FROM products
+
+Jika alias lebih dari 1 kata, wajib dengan petik :
+- SELECT id AS 'Kode Barang',
+	name AS 'Nama Barang',
+        category AS 'Kategori Barang',
+        price AS 'Harga Barang',
+        quantity AS 'Jumlah Barang'
+FROM products
+- SELECT DISTINCT Country AS [Nama Negara] FROM Suppliers;
+
+Alias Table :
+- SELECT aliasTable.namaKolom AS AliasKolom,
+	aliasTable.namaKolom AS AliasKolom,
+	aliasTable.namaKolom AS AliasKolom,
+	aliasTable.namaKolom AS AliasKolom,
+	aliasTable.namaKolom AS AliasKolom,
+FROM namaTable AS aliasTable
+
+Contoh query ALIAS TABLE :
+- SELECT p.id AS Kode,
+	p.name AS Nama,
+        p.category AS Kategori,
+        p.price AS Harga,
+        p.quantity AS Jumlah
+FROM products AS p

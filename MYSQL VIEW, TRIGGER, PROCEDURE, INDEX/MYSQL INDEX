@@ -1,0 +1,311 @@
+#1. Advanced MySQL Tutorial #1 | Bagaimana Index Bekerja Pada MySQL? :
+
+-- SHOW TABLES;
+
+-- CREATE TABLE mahasiswa(
+-- 	mhs_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     nama_depan VARCHAR(100) DEFAULT NULL,
+--     nama_belakang VARCHAR(100) DEFAULT NULL,
+--     tempat_lahir VARCHAR(100) DEFAULT NULL,
+--     tanggal_lahir DATE DEFAULT NULL,
+--     INDEX(nama_depan)
+-- )
+
+-- SHOW INDEX FROM mahasiswa;
+
+-- CREATE INDEX nama_belakang_idx ON mahasiswa(nama_belakang)
+-- CREATE INDEX tempat_lahir_idx ON mahasiswa(tempat_lahir)
+
+-- SELECT * FROM mahasiswa WHERE tempat_lahir = 'surabaya';
+-- SELECT * FROM mahasiswa
+
+#2. Advanced MySQL Tutorial #2 | Show Index, Drop Index dan Explain :
+
+-- 1. Analisa Join Table
+-- 2. Show Index
+-- 3. Drop Index
+-- 4. Explain format tree & json
+-- Notes :
+-- Perbedaan table memiliki index pada kolom tertentu, adalah pada saat pencarian data
+-- Jika tidak memiliki index, maka sata pencarian data akan memakan cost yang begitu besar
+-- Jika memiliki index, maka saat pencarian data dapat mengurangi seminimal mungkin cost yang ada
+
+-- SHOW INDEX FROM SIMCITY;
+-- DROP INDEX nama_index ON simcity;
+
+-- CREATE INDEX city_name_simcity_idx ON simcity(city_name)
+-- CREATE INDEX nama_provinsi_idx ON simprovinsi(nama_provinsi)
+
+-- EXPLAIN FORMAT=JSON
+-- SELECT * FROM simcity c 
+-- INNER JOIN simprovinsi s 
+-- ON s.provinsi_id = c.provinsi_id
+-- WHERE s.nama_provinsi = 'Jawa Tengah';
+
+-- Ini adalah informasi cost hasil dari query Join / Pencarian data
+-- -> Nested loop inner join  (cost=1.65 rows=4)
+--     -> Filter: (s.nama_provinsi = 'Jawa Tengah')  (cost=0.75 rows=1)
+--         -> Table scan on s  (cost=0.75 rows=5)
+--     -> Index lookup on c using FK_simcity_simprovinsi (provinsi_id=s.provinsi_id)  (cost=0.90 rows=4)
+
+#3. Advanced MySQL Tutorial #3 | Unique Index :
+
+-- 1. Konsep dasar unique index
+-- 2. Membuat unique index bersama create table
+-- 3. membuat unique index dengan alter table
+-- 4. membuat unique index dengan create unique index
+-- 5. unique index di mysql bisa menyimpan null lebih dari 1
+
+-- show index from mahasiswa
+-- DESC mahasiswa
+
+-- CREATE TABLE barang (
+-- 	barang_id INT PRIMARY KEY AUTO_INCREMENT,
+--     barcode VARCHAR(50) UNIQUE,
+--     nama VARCHAR(100)
+-- )
+
+-- CREATE TABLE barang (
+-- 	barang_id INT PRIMARY KEY AUTO_INCREMENT,
+--     barcode VARCHAR(50),
+--     nama VARCHAR(100),
+--     -- UNIQUE INDEX barcode_barang_idx (barcode)
+--     -- UNIQUE INDEX (barcode),
+--     CONSTRAINT barcode_barang_idx UNIQUE INDEX (barcode)
+-- )
+
+-- DESC barang;
+-- DROP TABLE barang;
+-- show index from barang;
+-- SHOW CREATE TABLE barang
+-- DROP INDEX barcode_barang_idx ON barang
+
+-- ALTER TABLE BARANG CHANGE barcode barcode_barang VARCHAR(200) UNIQUE;
+
+-- CREATE UNIQUE INDEX barcode_barang_idx ON barang (barcode_barang)
+
+-- Notes: Jika kolom bertipe index, tidak bisa input data dengan value yang sama
+
+-- INSERT INTO barang (barcode_barang, nama) VALUES
+-- 	('12345', 'Monitor LG 100'),
+-- 	(NULL, 'Monitor LG 100'),
+-- 	(NULL, 'Monitor LG 100');
+
+-- SELECT * FROM barang
+
+#4. Advanced MySQL Tutorial #4 | Prefix Index :
+
+-- 1. Konsep dasar prefix index
+-- 2. cara menentukan prefix index
+-- 3. membuat prefix index
+
+-- SELECT * FROM simcity;
+
+-- SELECT count(*) FROM simcity;
+-- SELECT max(length(city_name)) FROM simcity;
+-- SELECT min(length(city_name)) FROM simcity;
+
+-- SELECT COUNT(DISTINCT LEFT(city_name, 12)) FROM simcity;
+
+-- Notes : Query ini adalah Prefix Index, bisa dilihat ketika show index pada tabel, nama kolom 'sub_part' sebagai penanda bahwa kolom tersebut memiliki prefix index
+-- CREATE INDEX city_name_simcity_idx ON simcity(city_name(12));
+
+-- SHOW INDEX FROM simcity;
+
+-- DROP INDEX city_name_simcity_idx ON simcity;
+
+-- EXPLAIN FORMAT=JSON SELECT * FROM simcity WHERE city_name = 'Jakarta Barat';
+
+#5. Advanced MySQL Tutorial #5 | Composite Index :
+
+-- 1. Konsep dasar composite index
+-- 2. cara membuat composite index
+-- 3. menggunakan query composite index
+
+-- SHOW TABLES;
+
+-- SHOW CREATE TABLE EMPLOYEE;
+
+-- SHOW INDEX FROM EMPLOYEE;
+
+-- DESC EMPLOYEE;
+
+-- CREATE TABLE employee(
+-- 	employee_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     nama_depan VARCHAR(20),
+--     nama_tengah VARCHAR(20),
+--     nama_belakang VARCHAR(20),
+--     alamat VARCHAR(50),
+--     telp VARCHAR(20)
+-- )
+
+-- INSERT INTO employee(nama_depan, nama_tengah, nama_belakang, alamat, telp) VALUES
+-- 	('Dede', 'Syarifudin', 'Hidayat', 'Surabaya', '085166277261'),
+--     ('Rian', 'Pratama', 'Putra', 'Surabaya', '085166277261'),
+--     ('Hendro', 'Rachmat', 'Saputro', 'Surabaya', '085166277261'),
+--     ('Tri', 'Suli', 'Prasetyo', 'Surabaya', '085166277261'),
+--     ('Achmad', 'Mirdas', 'Putra', 'Surabaya', '085166277261'),
+--     ('Moh', 'Ali', 'Kacong', 'Surabaya', '085166277261');
+
+-- CREATE INDEX nama_employee_idx ON employee(nama_depan, nama_tengah, nama_belakang)
+
+-- SELECT * FROM EMPLOYEE WHERE NAMA_DEPAN = 'DEDE' 
+-- 						AND NAMA_TENGAH = 'SYARIFUDIN' 
+--                         AND NAMA_BELAKANG = 'HIDAYAT';
+
+
+#6. Advanced MySQL Tutorial #6 | Clustered Index :
+
+#7. Advanced MySQL Tutorial #7 | Descending Index :
+
+-- 1. Dasar descending index
+-- 2. cara membuat descending index
+-- 3. penggunaan descending index
+
+-- CREATE TABLE latihan(
+-- 	id INT PRIMARY KEY AUTO_INCREMENT,
+--     var1 INT,
+--     var2 INT,
+--     INDEX var1_asc_var2_asc (var1 asc, var2 asc),
+--     INDEX var1_asc_var2_desc (var1 asc, var2 desc),
+--     INDEX var1_desc_var2_asc (var1 desc, var2 asc),
+--     INDEX var1_desc_var2_desc (var1 desc, var2 desc)
+-- );
+
+-- SHOW CREATE TABLE latihan;
+
+-- SHOW INDEX FROM latihan;
+
+-- delimiter $$
+-- CREATE PROCEDURE insertdata(
+-- 	IN rowcount INT,
+--     IN low INT,
+--     IN high INT
+-- )
+-- begin
+-- 	DECLARE counter INT DEFAULT 0;
+--     REPEAT
+-- 		SET counter := counter + 1;
+--         INSERT INTO latihan(var1, var2)
+--         VALUES (
+-- 				round(rand() * (high - low) + high),
+--                 round(rand() * (high - low) + high)
+-- 				);
+-- 	UNTIL counter >= rowcount
+--     END REPEAT;
+-- end $$
+-- delimiter ;
+
+-- CALL insertdata(1000, 1, 1000);
+-- SELECT * FROM latihan
+-- SHOW CREATE PROCEDURE insertdata
+-- DROP PROCEDURE insertdata
+
+-- SELECT * FROM latihan ORDER BY var2 desc;
+
+#8. Advanced MySQL Tutorial #8 | Invisible Index :
+
+-- 1. Invisible Index
+
+SHOW TABLES;
+SHOW INDEX FROM BARANG;
+
+-- Notes : Query ini adalah untuk invisible index, bisa dilihat ketika show pada kolom 'visible = yes/no' untuk status index 
+ALTER TABLE BARANG ALTER INDEX barcode_barang_idx VISIBLE;
+-- EXPLAIN SELECT * FROM BARANG WHERE barang_id = 1;
+
+EXPLAIN SELECT * FROM BARANG WHERE BARCODE_BARANG = '12345';
+
+-- CREATE TABLE test(
+-- 	id INT PRIMARY KEY AUTO_INCREMENT,
+--     tlp VARCHAR(15),
+--     INDEX tlp_test_idx (tlp) INVISIBLE
+-- );
+
+#9. Advanced MySQL Tutorial #9 | Index Cardinality :
+
+-- 1. Index Cardinality
+
+SELECT * FROM employee;
+SHOW CREATE TABLE employee;
+SHOW INDEX FROM employee;
+
+-- Notes : ini adalah query Index Cardinality
+SELECT 	COUNT(DISTINCT EMPLOYEE_ID) AS ID, 
+		COUNT(DISTINCT NAMA_DEPAN) AS NAMADEPAN,
+        COUNT(DISTINCT NAMA_TENGAH) AS NAMATENGAH,
+        COUNT(DISTINCT NAMA_BELAKANG) AS NAMABELAKANG
+        FROM EMPLOYEE;
+
+-- ALTER TABLE employee MODIFY employee_id INT UNIQUE AUTO_INCREMENT;
+
+-- INSERT INTO employee(nama_depan, nama_tengah, nama_belakang, alamat, telp) VALUES
+-- 	('Dede', 'Syarifudin', 'Hidayat', 'Surabaya', '085166277261'),
+--     ('Rian', 'Pratama', 'Putra', 'Surabaya', '085166277261'),
+--     ('Hendro', 'Rachmat', 'Saputro', 'Surabaya', '085166277261'),
+--     ('Tri', 'Suli', 'Prasetyo', 'Surabaya', '085166277261'),
+--     ('Achmad', 'Mirdas', 'Putra', 'Surabaya', '085166277261'),
+--     ('Moh', 'Ali', 'Kacong', 'Surabaya', '085166277261');
+
+-- TRUNCATE employee;
+
+#10. Advanced MySQL Tutorial #10 | Use Index Hint :
+
+-- 1. Use index hint
+-- 2. Penggunaan use index
+
+SHOW INDEX FROM employee;
+
+CREATE INDEX nama_depan_employee_idx ON employee (nama_depan);
+CREATE INDEX nama_tengah_employee_idx ON employee (nama_tengah);
+CREATE INDEX nama_belakang_employee_idx ON employee (nama_belakang);
+CREATE INDEX nama_desc_employee_idx ON employee (nama_belakang, nama_tengah, nama_depan);
+
+SELECT * FROM employee 
+USE INDEX(nama_tengah_employee_idx)
+WHERE nama_depan = 'Dede' 
+AND nama_tengah = 'Syarifudin' 
+AND nama_belakang = 'Hidayat';
+
+SELECT * FROM employee 
+WHERE nama_depan = 'Dede' 
+AND nama_tengah = 'Syarifudin' 
+AND nama_belakang = 'Hidayat';
+
+SELECT * FROM EMPLOYEE;
+
+#11. Advanced MySQL Tutorial #11 | Force Index :
+
+#12. Advanced MySQL Tutorial #12 | Fulltext Index :
+
+-- 1. Fulltext index
+-- 2. Cara membuat fulltext index
+-- 3. Coba fulltext index
+
+-- CREATE TABLE article(
+-- 	id INT PRIMARY KEY AUTO_INCREMENT,
+--     title VARCHAR(100),
+--     post TEXT,
+--     FULLTEXT (post)
+-- );
+
+-- ALTER TABLE ARTICLE ADD FULLTEXT post_article_idx (post)
+-- CREATE FULLTEXT INDEX post_article_idx ON ARTICLE(post);
+-- SHOW INDEX FROM ARTICLE;
+-- DROP INDEX post_article_idx ON ARTICLE;
+
+-- SELECT * FROM ARTICLE;
+
+-- INSERT INTO ARTICLE(title, post) VALUES
+-- 	('Pemrograman PHP', 'Ini Pemrograman PHP dengan Laravel'),
+--     ('MYSQL QUERY', 'Ini query mysql, postgree sql, dan sql server'),
+--     ('Front End HTML, CSS, JAVASCRIPT, BOOTSTRAPS', 'Ini adalah teknologi front end');
+
+-- Notes : ini adalah query FULLTEXT INDEX
+SELECT * FROM ARTICLE 
+WHERE MATCH(post) 
+AGAINST('html, php, sql' IN NATURAL LANGUAGE MODE) 
+ORDER BY id;
+
+
+

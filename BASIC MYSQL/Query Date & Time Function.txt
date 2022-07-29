@@ -1,0 +1,16 @@
+Materi MYSQL Programmer Zaman Now, Date & Time Function :
+Query 1 :
+- SELECT id, created_at,
+	EXTRACT(YEAR FROM created_at) AS Year,
+	EXTRACT(MONTH FROM created_at) AS Month,
+	EXTRACT(HOUR FROM created_at) AS Hour,
+    	EXTRACT(MINUTE FROM created_at) AS Minute,
+    	EXTRACT(SECOND FROM created_at) AS Second
+FROM products;
+
+------------------------------------------------------------------------
+Query 2 :
+- SELECT id, created_at, YEAR(created_at), MONTH(created_at) FROM products;
+- SELECT YEAR(created_at), MONTH(created_at), DATE(created_at), HOUR(created_at), MINUTE(created_at), SECOND(created_at) FROM transactions;
+
+Riset lebih dalam lagi, mengenai Date & Time Function

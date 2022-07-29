@@ -1,0 +1,20 @@
+Programmer Zaman Now MYSQL, Auto Increment :
+- CREATE TABLE admin (
+	id INT NOT NULL AUTO_INCREMENT,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
+	PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+- DESCRIBE admin
+- SELECT * FROM admin ORDER BY id
+- DELETE FROM admin WHERE id = 3
+
+- INSERT INTO admin(first_name, last_name)
+VALUES 	('Dede','Syarif'),
+	('Hendro','Rachmad'),
+	('Rian','Pratama');
+
+- SELECT LAST_INSERT_ID()
+- ALTER TABLE namatable MODIFY namakolom INT AUTO_INCREMENT
+- ALTER TABLE admin MODIFY id_admin INT AUTO_INCREMENT

@@ -1,0 +1,123 @@
+Programmer Zaman Now MYSQL, Where Operator :
+1. Operator Perbandingan :
+- = Sama Dengan
+- != Tidak Sama Dengan
+- < Kurang Dari
+- <= Kurang dari sama dengan
+- > Lebih Dari
+- >= Lebih Dari sama dengan
+
+SELECT * FROM namaTable WHERE namaKolom > valueKolom
+SELECT * FROM namaTable WHERE namaKolom >= valueKolom
+SELECT * FROM namaTable WHERE namaKolom < valueKolom
+SELECT * FROM namaTable WHERE namaKolom <= valueKolom
+SELECT * FROM namaTable WHERE namaKolom = valueKolom
+SELECT * FROM namaTable WHERE namaKolom != valueKolom
+
+EXAMPLE :
+- SELECT * FROM Products WHERE Price = 18;
+- SELECT * FROM Products WHERE Price > 30;
+- SELECT * FROM Products WHERE Price < 40 AND Price > 30;
+- SELECT * FROM Products WHERE Price <= 40 AND Price >= 30;
+- SELECT * FROM Products WHERE Price <> 18;
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+2. Operator AND dan OR :
+- true AND true = true
+- true AND false = false
+- false AND true = false
+- false AND false = false
+- true OR true = true
+- true OR false = true
+- false OR true = true
+- false OR false = false
+
+EXAMPLE :
+- SELECT * FROM products WHERE (quantity > 100 AND price > 15000)
+- SELECT * FROM products WHERE (category = 'Makanan' AND price < 15000)
+- SELECT * FROM products WHERE (quantity > 100 OR price > 20000)
+- SELECT * FROM products WHERE (category > 'Makanan' OR quantity > 100) AND price > 5000
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+3. Operator LIKE :
+- LIKE 'b%' = String dengan awalan b
+- LIKE '%b' = String dengan akhiran b
+- LIKE '%dede%' = String berisi dede
+- NOT LIKE = Tidak LIKE
+
+EXAMPLE :
+SELECT CustomerName FROM Customers WHERE CustomerName LIKE '%or%';
+SELECT city FROM Customers WHERE city LIKE 'b%s';
+SELECT * FROM products WHERE name LIKE 'Mie%';
+SELECT * FROM products WHERE name NOT LIKE 'Mie%';
+SELECT * FROM Customers WHERE City LIKE '[wr]%';
+SELECT * FROM Customers WHERE CustomerName LIKE '%[o]';
+SELECT * FROM Customers WHERE Country LIKE '[!ae]%'; === SELECT * FROM Customers WHERE Country NOT LIKE '[ae]%';
+SELECT * FROM Customers WHERE Country LIKE '%[!ae]'; === SELECT * FROM Customers WHERE Country NOT LIKE '%[ae]';
+
+SELECT * FROM Customers WHERE City LIKE '[a-e]%';
+SELECT * FROM Customers WHERE City LIKE '%[a-e]';
+SELECT * FROM Customers WHERE City LIKE '[!a-e]%'; === SELECT * FROM Customers WHERE City NOT LIKE '[a-e]%';
+SELECT * FROM Customers WHERE City LIKE '%[!a-e]'; === SELECT * FROM Customers WHERE City NOT LIKE '%[a-e]';
+
+SELECT CustomerName FROM Customers WHERE CustomerName LIKE '_r%';
+SELECT * FROM Customers WHERE CustomerName LIKE 'a__%';
+SELECT Country FROM Customers WHERE Country LIKE '___ma__' ORDER BY Country ASC;
+SELECT Country FROM Customers WHERE Country LIKE '__na__' ORDER BY Country ASC;
+SELECT Country FROM Customers WHERE Country LIKE '_S_' ORDER BY Country ASC;
+SELECT Country FROM Customers WHERE (Country LIKE '__na__' OR Country LIKE '_S_' OR Country LIKE '__az__') ORDER BY Country ASC;
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+4. Operator NULL :
+- IS NULL, artinya mencari yang NULL berdasarkan tabel
+- IS NOT NULL, artinya mencari yang tidak NULL berdasarkan tabel
+
+EXAMPLE :
+SELECT * FROM products WHERE description IS NULL
+SELECT * FROM products WHERE description IS NOT NULL
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+5. Operator BETWEEN :
+- BETWEEN, artinya mencari nilai antara yang ditentukan berdasarkan tabel
+- NOT BETWEEN, artinya mencari nilai di luar antara yang ditentukan berdasarkan tabel
+
+EXAMPLE :
+Cara Manual
+SELECT * FROM products WHERE !(quantity >= 100 AND quantity <= 200);
+SELECT * FROM products WHERE price >= 10000 AND price <= 20000;
+SELECT * FROM products WHERE quantity <= 100 AND price >= 10000;
+SELECT * FROM products WHERE price >= 10000 AND quantity <= 100;
+
+BETWEEN FUNGSI :
+SELECT * FROM products WHERE price BETWEEN 10000 AND 20000;
+SELECT * FROM products WHERE quantity BETWEEN 100 AND 150;
+SELECT * FROM products WHERE price NOT BETWEEN 10000 AND 20000;
+SELECT * FROM products WHERE quantity NOT BETWEEN 100 AND 150;
+SELECT * FROM products WHERE !(price BETWEEN 10000 AND 20000);
+SELECT * FROM products WHERE !(quantity BETWEEN 100 AND 150);
+SELECT * FROM Products WHERE Price BETWEEN 10 AND 20 AND CategoryID NOT IN (1,2,3);
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+
+6. Operator 'IN' :
+- IN, artinya mencari nilai yang telah ditentukan berdasarkan tabel
+- NOT IN, artinya mencari nilai di luar yang telah ditentukan berdasarkan tabel
+
+EXAMPLE :
+Cara Manual :
+SELECT * FROM products WHERE category = 'Makanan' OR category = 'Minuman'
+
+IN FUNGSI :
+SELECT * FROM products WHERE category IN ('Makanan', 'Minuman')
+SELECT * FROM products WHERE category NOT IN ('Makanan', 'Minuman')
+
+

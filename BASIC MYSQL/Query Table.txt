@@ -1,0 +1,32 @@
+Programmer Zaman Now MYSQL, Table Query :
+- CREATE DATABASE NamaDatabase;
+- SHOW DATABASES;
+- DROP DATABASE NamaDatabase;
+- CREATE TABLE NamaTable (
+	id INT,
+	nama VARCHAR(100),
+	harga INT,
+	jumlah INT
+) ENGINE = InnoDB;
+- DESCRIBE NamaTable;
+- SHOW CREATE TABLE NamaTable;
+- SHOW TABLES
+
+////////////////////////////////////////////////////
+Mengubah Table :
+- RENAME TABLE namatable TO namatablebaru
+- ALTER TABLE namatable ADD COLUMN namakolom TEXT
+- ALTER TABLE namatable RENAME COLUMN namakolom TO namaKolomBaru
+- ALTER TABLE namatable DROP COLUMN namakolom
+- ALTER TABLE namatable MODIFY namakolom TIPEKOLOM AFTER namakolom
+- ALTER TABLE namatable MODIFY namakolom TIPEKOLOM FIRST
+
+- ALTER TABLE namatable MODIFY namakolom INT NOT NULL DEFAULT 100
+- ALTER TABLE namatable MODIFY namakolom INT NOT NULL DEFAULT 200
+- ALTER TABLE namatable ADD waktuDibuat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+- INSERT INTO namatable (id, nama, harga, jumlah) VALUES (1, 'Mangga', 7000, 4)
+- SELECT * FROM namatable
+
+- TRUNCATE NamaTable
+- DROP TABLE NamaTable

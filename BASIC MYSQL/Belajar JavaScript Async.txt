@@ -1,0 +1,7 @@
+Belajar JavaScript Async :
+- Asynchronous
+- Callback
+- AJAX
+- Promise
+- Async Await
+- Web Worker

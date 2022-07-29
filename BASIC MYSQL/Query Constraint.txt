@@ -1,0 +1,27 @@
+Materi MYSQL Programmer Zaman Now, Constraint :
+Unique Constraint :
+- CREATE TABLE customers (
+	id INT NOT NULL AUTO_INCREMENT,
+	email VARCHAR(100) NOT NULL,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100),
+	PRIMARY KEY (id),
+	UNIQUE KEY email_unique (email)
+) ENGINE = InnoDB;
+
+Menambah/Menghapus Unique Constraint :
+- ALTER TABLE customers DROP CONSTRAINT email_unique
+- ALTER TABLE customers ADD CONSTRAINT email_unique UNIQUE (email) 
+// JIka pada kolom terdapat data yang terlanjur sama valuenya, maka query ini akan gagal
+
+- INSERT INTO customers(email, first_name, last_name) 
+VALUES ('eko@gmail.com', 'Eko', 'Kurniawan')
+
+Check Constraint :
+- ALTER TABLE products ADD CONSTRAINT price_check CHECK (price >= 1000 AND price <= 1000000)
+- ALTER TABLE BARANG ADD CONSTRAINT HARGA_CHECK CHECK (harga >= 10000 AND harga <= 2000000)
+- INSERT INTO products(id, name, category, price, quantity) VALUES ('P0022', 'Permen', 'Lain-lain', 500, 1000) 
+// data ini gagal di input, karna minimal price harus 1000
+
+
+

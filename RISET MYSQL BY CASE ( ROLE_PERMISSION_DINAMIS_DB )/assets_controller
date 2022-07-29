@@ -1,0 +1,287 @@
+SELECT SUM(qty_in) AS qty_in, SUM(qty_out) AS qty_out FROM logs
+
+
+select * from `assets` order by `id` asc LIMIT 3 OFFSET 10
+
+
+select * from `users` order by `id` ASC LIMIT 1 OFFSET 2
+
+
+select `id` as `id_log`, `date` as `date_log` from `logs` order by `id` DESC limit 1
+
+
+select count(*) as aggregate from `assets`
+
+
+select distinct * from `logs` where `type` = 10
+
+
+select * from `users` order by `id` asc LIMIT 3
+
+
+select max(`code`) as aggregate from `assets`
+
+
+select min(`code`) as aggregate from `assets`
+
+
+select sum(`quantity`) as aggregate from `assets` where `code` LIKE "%IT%"
+
+
+select avg(`quantity`) as aggregate from `assets` where `code` LIKE "%IT%"
+
+
+select exists(select * from `logs` where `notes` LIKE "%samsung%") as `exists`
+
+
+select distinct * from `logs` where `notes` LIKE "%acer%"
+
+
+select count(*) as jumlahRecordByType, type from `logs` where `type` <= 10 group by `type`
+
+
+select qty_in * 2 as quantity from `logs`
+
+
+select `id`, `type`, `qty_in` from `logs` where qty_in > IF(type = 10, 7, 4)
+
+
+select `type`, SUM(qty_in) as total_sales from `logs` group by `type` having total_sales < 101 order by `type` desc
+
+
+select `id`, `updated_at`, `created_at`, `qty_in`, `qty_out` from `logs` order by updated_at - created_at DESC
+
+
+select `type`, `qty_out` from `logs` group by type, qty_out
+
+
+select `menu`.*, `sub_menu`.*, `content`.* from `menu` 
+inner join `sub_menu` on `menu`.`id` = `sub_menu`.`menu_id` 
+inner join `content` on `menu`.`id` = `content`.`menu_id`
+
+
+select * from `comments` left join `commentables` on `comments`.`id` = `commentables`.`comment_id`
+
+
+select * from `assets` right join `logs` on `assets`.`id` = `logs`.`asset_id`
+
+
+select * from `assets` cross join `logs` on `assets`.`id` = `logs`.`asset_id`
+
+
+select * from `assets` inner join `logs` on `assets`.`id` = `logs`.`asset_id`
+
+
+select * from `menu` inner join `content` on `menu`.`id` = `content`.`menu_id` or `menu`.`id` = `content`.`sub_menu_id`
+
+
+SELECT * from `assets` 
+inner join `logs` on `assets`.`id` = `logs`.`asset_id` 
+and `logs`.`asset_id` < 5
+
+
+select * from `assets` 
+inner JOIN 
+(
+	select `asset_id`, MIN(qty_in) as jumlah from `logs` 
+	where `employee_id` is NULL group by `asset_id`
+) 
+as `catatan` on `assets`.`id` = `catatan`.`asset_id`
+
+
+select * from `assets` 
+left JOIN 
+(
+	select `asset_id`, MIN(qty_in) as jumlah from `logs` 
+	where `employee_id` IS NULL group by `asset_id`
+) 
+as `catatan` on `assets`.`id` = `catatan`.`asset_id`
+
+
+select * from `assets` 
+right JOIN 
+(
+	select `asset_id`, MIN(qty_in) as jumlah from `logs` 
+	where `employee_id` IS NOT NULL group by `asset_id`
+) 
+as `catatan` on `assets`.`id` = `catatan`.`asset_id`
+
+
+select * from `logs` where `notes` is NULL 
+union all (select * from `logs` where `employee_id` is null)
+
+
+select * from `logs` where `type` = 8 and `qty_in` > 5
+
+
+select * from `logs` where `qty_in` != 5
+
+
+select * from `logs` where `notes` LIKE "%volt%"
+
+
+select * from `logs` where (`type` = 8 and `qty_in` > 5)
+
+
+select * from `logs` where (`type` = 8 && `qty_in` > 5)
+
+
+select * from `logs` where `employee_id` = 2 or `type` = 50
+
+
+select * from `logs` where `employee_id` = 2 || `type` = 50
+
+
+select * from `logs` where `employee_id` = 2 or (`type` = 12 and `asset_id` = 12)
+
+
+select * from `logs` where `employee_id` = 2 || (`type` = 12 && `asset_id` = 12)
+
+
+select * from `logs` where `type` = 1
+
+
+select * from `logs` where `id` BETWEEN 5 AND 8
+
+
+select * from `logs` where `id` NOT BETWEEN 5 AND 8
+
+
+select * from `logs` where `id` IN (3, 4, 5, 9, 10)
+
+
+select * from `logs` WHERE `asset_id` IN (3, 4, 5, 9, 10)
+
+
+select * from `logs` WHERE `id` IN (3, 4, 5) OR `asset_id` IN (9, 10)
+
+
+select * from `logs` where `id` not IN (1, 2, 3)
+
+
+select * from `logs` where `id` not IN (1, 2, 3) AND `asset_id` NOT IN (5, 6)
+
+
+select * from `logs` WHERE 
+(`id` NOT IN (1, 2, 3) 
+AND `asset_id` 
+NOT IN (5, 6))
+
+
+select * from `logs` where `employee_id` is NULL OR `updated_at` IS NULL
+
+
+select * from `logs` where `employee_id` IS NOT NULL OR `created_at` IS NULL
+
+
+select * from `logs` where date(`created_at`) = '2022-07-19 00:00:00'
+
+
+select * from `logs` where month(`created_at`) = '07'
+
+
+select * from `logs` where day(`created_at`) = '02'
+
+
+select * from `logs` WHERE year(`created_at`) = '2022'
+
+
+select * from `logs` where time(`created_at`) = '00:00:00'
+
+
+select * from `assets` where `created_by` = `updated_by`
+
+
+select * from `assets` where `created_by` != `updated_by`
+
+
+select * from `logs` where `created_at` > `updated_at`
+
+
+select * from `logs` WHERE (`date` = `created_at` OR `created_at` > `updated_at`)
+
+
+select * from `logs` WHERE NOT (`date` = `created_at` OR `created_at` > `updated_at`)
+
+
+select * from `logs` 
+where `notes` LIKE '%laptop%' 
+and (`asset_id` < '5' OR `notes` LIKE '%macbook%')
+
+
+select * from `logs` 
+where `notes` LIKE '%laptop%' 
+and (`asset_id` < '5' AND `notes` LIKE '%macbook%')
+
+
+select * from `assets` 
+where (select `type` from `logs` where `logs`.`asset_id` = `assets`.`id` 
+order by `logs`.`asset_id` desc limit 1) = 10
+
+
+SELECT * FROM `assets` 
+WHERE (SELECT `type` FROM `logs` WHERE `logs`.`asset_id` = `assets`.`id`
+ORDER BY `logs`.`asset_id` DESC LIMIT 1) = 8
+
+
+select * from `logs` where `qty_in` < (select AVG(l.qty_in) from `logs` as `l`)
+
+
+select * from `logs` order by `id` desc, `asset_id` asc
+
+
+select * from `logs` order by `created_at` DESC LIMIT 3
+
+
+select * from `logs` order by RAND() LIMIT 1
+
+
+select * from `logs` order by RAND() LIMIT 2
+
+
+select * from `logs` order by RAND() LIMIT 3
+
+
+select * from `logs` order by `id` desc
+
+
+select count(id) as number_of_orders, category_id from `assets` 
+group by `category_id`
+
+
+select count(id) as number_of_orders, category_id from `assets` 
+group by `category_id` having `category_id` = 3
+
+
+select count(id) as number_of_orders, category_id from `assets` 
+group by `category_id` having `number_of_orders` BETWEEN 1 AND 10
+
+
+select * from `users` group by `email` having `account_id` >= 2
+
+
+select * from `assets` group by `code` having `category_id` >= 2
+
+
+select * from `assets` limit 5 offset 5
+
+
+SELECT * FROM `assets` LIMIT 2 OFFSET 6
+
+
+select * from `roles` 
+where `roles`.`id` = 2 and `roles`.`deleted_at` is null LIMIT 1
+
+
+select * from `role_permission` where `role_id` = 2
+
+
+select * from `roles` 
+where `roles`.`id` = 2 and `roles`.`deleted_at` is null limit 1
+
+
+select * from `role_permission` where `role_id` = 2
+
+
+
+

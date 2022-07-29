@@ -1,0 +1,38 @@
+Materi MYSQL Programmer Zaman Now, One To Many Relationship :
+- CREATE TABLE categories (
+	id	VARCHAR(10) NOT NULL,
+	name	VARCHAR(100) NOT NULL,
+	PRIMARY KEY (id)
+) ENGINE = InnoDB
+
+- DESCRIBE categories
+- ALTER TABLE products DROP COLUMN categories
+- ALTER TABLE products
+ADD COLUMN id_categories VARCHAR(100)
+- ALTER TABLE products 
+ADD CONSTRAINT fk_products_categories
+FOREIGN KEY (id_categories) REFERENCES categories (id)
+- SHOW CREATE TABLE products
+- INSERT INTO categories(id, name)
+VALUES	('C0001', 'Makanan'),
+	('C0002', 'Minuman'),
+	('C0003', 'Lain-Lain');
+
+- UPDATE products
+SET id_categories = 'C0001'
+WHERE id IN ('P0003', 'P0005', 'P0008', 'P0009', 'P0017', 'P0019', 'P0020')
+
+- UPDATE products
+SET id_categories = 'C0002'
+WHERE id IN ('P0010', 'P0011', 'P0012')
+
+- UPDATE products
+SET id_categories = 'C0003'
+WHERE id IN ('P0013', 'P0014', 'P0015', 'P0016', 'P0021')
+
+// Join One To Many
+- SELECT products.id, products.name, categories.name
+FROM products
+JOIN categories ON (categories.id = products.id_categories)
+
+

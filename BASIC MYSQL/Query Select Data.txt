@@ -1,0 +1,8 @@
+Programmer Zaman Now MYSQL, Select Data :
+- SELECT * FROM products;
+- SELECT id, name, price, quantity FROM products;
+- SELECT name, price, quantity FROM products;
+- SELECT TOP 3 * FROM Customers;
+- SELECT * FROM Customers LIMIT 3;
+- SELECT TOP 3 * FROM Customers WHERE Country='Germany';
+- SELECT * FROM Customers WHERE Country='Germany' LIMIT 3;

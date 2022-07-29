@@ -1,0 +1,13 @@
+Materi MYSQL Programmer Zaman Now, Grouping :
+|| SELECT COUNT(id) AS 'Total Product', category FROM products GROUP BY category
+|| SELECT MAX(price) AS 'Product Termahal', category FROM products GROUP BY category
+|| SELECT MIN(price) AS 'Product Termurah', category FROM products GROUP BY category
+|| SELECT AVG(price) AS 'Rata-Rata Harga', category FROM products GROUP BY category
+|| SELECT SUM(quantity) AS 'Total Stock', category FROM products GROUP BY category
+
+|| SELECT COUNT(id) AS total, category FROM products GROUP BY category HAVING total > 6
+|| SELECT COUNT(id) AS stock, category FROM products GROUP BY category HAVING stock >= 5
+|| SELECT MAX(price) AS harga, category FROM products GROUP BY category HAVING harga < 50000
+|| SELECT SUM(quantity) AS jumlah, category FROM products GROUP BY category HAVING jumlah > 500 && jumlah < 1000
+|| SELECT SUM(quantity) AS jumlah, category FROM products GROUP BY category HAVING !(jumlah > 500 && jumlah < 1000)
+|| SELECT quantity AS jumlah FROM products HAVING jumlah > 150 && jumlah < 200

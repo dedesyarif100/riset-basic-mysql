@@ -1,0 +1,26 @@
+Programmer Zaman Now MYSQL, Tipe Data Number :
+1. Integer, tipe number bilangan bulat
+2. Floating Point, tipe data number pecahan
+
+Tipe Data Integer :
+1. TINYINT 	LENGTH = 1 bytes
+2. SMALLINT 	LENGTH = 2 bytes
+3. MEDIUMINT	LENGTH = 3 bytes
+4. INT	    	LENGTH = 4 bytes
+5. BIGINT	LENGTH = 8 bytes
+
+Tipe Data Floating Point :
+1. FLOAT	LENGTH = 4 bytes
+2. DOUBLE	LENGTH = 8 bytes
+
+Tipe Data DECIMAL :
+1. DESIMAL(5, 2) = 999,99
+2. DESIMAL(5, 0) = 99999
+3. DESIMAL(3, 1) = 99,9
+4. DESIMAL(3)	 = 999
+
+NUMBER ATTRIBUTE :
+1. TYPE(N)	=> INT(3), BIGINT(5)
+2. ZEROFILL 	=> INT(2) ZEROFILL, 7 = 07
+		=> INT(3) ZEROFILL, 8 = 008
+		=> INT(4) ZEROFILL, 9 = 0009

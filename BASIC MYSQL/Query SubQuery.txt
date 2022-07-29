@@ -1,0 +1,15 @@
+Materi MYSQL Programmer Zaman Now, SubQuery :
+// SubQuery WHERE
+- SELECT AVG(price) FROM products
+- SELECT * FROM products WHERE price > 13130.4348
+- SELECT * FROM products WHERE price > (SELECT AVG(price) FROM products)
+- SELECT * FROM Products WHERE ProductID = ANY (SELECT ProductID FROM OrderDetails WHERE Quantity = 10);
+- SELECT * FROM Products WHERE ProductID = ALL (SELECT ProductID FROM OrderDetails WHERE Quantity = 10);
+- SELECT ALL ProductID, ProductName, Unit, Price FROM Products WHERE TRUE;
+
+
+// SubQuery FROM
+- SELECT MAX(price) FROM products
+- UPDATE products SET price = 1000000 WHERE id = 'X0003'
+- SELECT price FROM categories JOIN products ON (products.id_categories = categories.id)
+- SELECT MAX(cp.price) FROM (SELECT price FROM categories JOIN products ON (products.id_categories = categories.id)) AS cp

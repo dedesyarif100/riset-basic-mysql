@@ -1,0 +1,13 @@
+Materi MYSQL Programmer Zaman Now, Transaction :
+- START TRANSACTION
+- INSERT INTO guestbooks(email, title, content)
+VALUES 	('guest1@gmail.com', 'Hello', 'Hello'),
+	('guest2@gmail.com', 'Hello', 'Hello'),
+	('guest3@gmail.com', 'Hello', 'Hello');
+- SELECT * FROM guestbooks
+- COMMIT
+
+- START TRANSACTION
+- DELETE FROM guestbooks
+- SELECT * FROM guestbooks
+- ROLLBACK

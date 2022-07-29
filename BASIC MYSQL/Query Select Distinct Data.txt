@@ -1,0 +1,5 @@
+Programmer Zaman Now MYSQL, Select Distinct Data :
+- SELECT DISTINCT name FROM products
+- SELECT DISTINCT category, id FROM products
+- SELECT COUNT(DISTINCT Country) FROM customers
+- SELECT Count(*) AS DistinctCountries FROM (SELECT DISTINCT Country FROM Customers);

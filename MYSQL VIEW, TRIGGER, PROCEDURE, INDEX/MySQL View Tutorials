@@ -1,0 +1,193 @@
+#1. MySQL View Tutorials #1 | Basic View :
+
+-- CREATE TABLE penjualan (
+-- 	penjualan_id INT PRIMARY KEY AUTO_INCREMENT,
+--     barang_id INT NOT NULL,
+--     jumlah INT NOT NULL,
+--     harga_satuan INT NOT NULL,
+--     trans_date DATETIME DEFAULT current_timestamp ON UPDATE current_timestamp
+-- )
+
+-- SELECT * FROM barang
+-- SHOW CREATE TABLE penjualan
+
+-- ALTER TABLE penjualan ADD CONSTRAINT fk_barangid_from_barang
+-- FOREIGN KEY (barang_id) REFERENCES barang (barang_id)
+
+-- INSERT INTO penjualan (barang_id, jumlah, harga_satuan, trans_date)
+-- 	VALUES (2, 2, 180000, '2021-04-20 20:20:10')
+
+-- CREATE VIEW trans_penjualan_versi_2 AS
+-- SELECT b.barang_id, b.nama, p.harga_satuan
+-- FROM barang AS b 
+-- INNER JOIN 
+-- penjualan AS p 
+-- ON (b.barang_id = p.barang_id)
+
+-- SELECT * FROM trans_penjualan
+
+#2. MySQL View Tutorials #2 | Create View :
+
+-- <<< Basic Statement <<<
+-- 		CREATE [ON REPLACE] VIEW [db_name.] view_name [(column_list)]
+--     	AS select_statement\
+
+-- <<< create view from view <<<
+-- SHOW FULL TABLES;
+-- SELECT * FROM trans_penjualan;
+
+-- CREATE OR REPLACE view coba_trigger.trans_fromview
+-- AS SELECT nama, jumlah FROM trans_penjualan WHERE harga_satuan > 150000;
+-- SELECT * FROM trans_fromview;
+
+-- <<< create view with join table <<<
+-- CREATE VIEW trans_join
+-- 	AS SELECT b.barang_id, b.nama, p.harga_satuan, p.jumlah, p.trans_date
+-- 	FROM barang AS b 
+-- 	INNER JOIN 
+-- 	penjualan AS p 
+-- 	ON (b.barang_id = p.barang_id)
+-- 	ORDER BY p.harga_satuan;
+-- SELECT * FROM trans_join;
+
+-- <<< create view with sub query <<<
+-- CREATE VIEW trans_subquery
+-- 	AS SELECT * FROM barang WHERE barang_id IN ( SELECT barang_id FROM penjualan )
+
+-- SELECT * FROM trans_subquery
+
+-- <<< create view with explicit column <<<
+-- CREATE VIEW trans_explisit (
+-- 	`nama barang`,
+--     `jumlah harga`
+-- ) AS SELECT nama, sum(harga) FROM barang GROUP BY nama;
+-- SELECT * FROM trans_explisit
+
+#3. MySQL View Tutorials #3 | Algoritma View :
+
+
+
+
+#4. MySQL View Tutorials #4 | Update Value dari View :
+// View yang tidak bisa di update adalah view yang memiliki algoritma TEMPTABLE,
+// View yang tidak bisa di update adalah view yang memiliki query seperti GROUP BY, ORDER BY, FUNCTION perhitungan seperti SUM, COUNT, AVG
+
+-- SELECT TABLE_NAME, IS_UPDATABLE FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = 'coba_trigger'
+
+-- SELECT * FROM information_schema.views
+
+-- SELECT * FROM information_schema.views WHERE TABLE_SCHEMA = 'coba_trigger'
+
+-- SELECT * FROM BARANG B
+-- SELECT * FROM BARANG AS B
+-- UPDATE LATIHAN_VIEW SET BARCODE = 33300 WHERE BARANG_ID = 3
+
+-- SELECT * FROM TRANS_JOIN 
+-- UPDATE TRANS_JOIN SET NAMA = 'Rumah Testing' WHERE BARANG_ID = 3
+
+#5. MySQL View Tutorials #5 | Show, Rename dan Drop :
+-- Show view
+-- Rename view
+-- Drop view
+
+-- SHOW TABLES;
+-- SHOW FULL TABLES;
+-- SHOW FULL TABLES WHERE TABLE_TYPE = 'BASE TABLE';
+-- SHOW FULL TABLES WHERE TABLE_TYPE = 'VIEW';
+
+-- SHOW FULL TABLES IN COBA_TRIGGER WHERE TABLE_TYPE = 'VIEW'
+-- SHOW FULL TABLES FROM COBA_TRIGGER WHERE TABLE_TYPE = 'VIEW'
+
+-- SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'COBA_TRIGGER' AND TABLE_TYPE = 'VIEW'
+-- SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'COBA_TRIGGER' AND TABLE_TYPE = 'BASE TABLE'
+
+-- SELECT * FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = 'COBA_TRIGGER'
+
+-- SHOW CREATE VIEW LATIHAN_VIEW
+
+-- RENAME TABLE latihan_view TO latihan_view1;
+
+-- DROP VIEW latihan_view
+-- DROP VIEW IF EXISTS latihan_view
+
+#6. MySQL View Tutorials #6 | Validasi Input pada View (With Check Option) :
+
+-- MYSQL VIEW WITH CHECK OPTION
+
+-- SELECT * FROM barang
+
+-- ALTER TABLE BARANG ADD COLUMN kategori ENUM('Kendaraan', 'Teknologi', 'Kebutuhan Premier')
+-- UPDATE BARANG SET kategori = 'Kebutuhan Premier' WHERE barang_id = 3
+
+-- CREATE OR REPLACE VIEW VIEW_TEKNOLOGI AS
+-- SELECT * FROM BARANG WHERE KATEGORI = 'Teknologi'
+
+-- SELECT * FROM VIEW_TEKNOLOGI
+-- INSERT INTO VIEW_TEKNOLOGI (nama, harga, kategori) VALUES ('radio', 200000, 'Teknologi')
+-- UPDATE VIEW_TEKNOLOGI SET BARCODE = '123' WHERE BARANG_ID = 4
+
+-- SHOW CREATE VIEW VIEW_TEKNOLOGI
+-- DROP VIEW VIEW_TEKNOLOGI
+
+-- CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `view_teknologi` AS 
+-- select  `barang`.`barang_id` AS `barang_id`,
+-- 	   `barang`.`barcode` AS `barcode`,
+--             `barang`.`nama` AS `nama`,
+--         	    `barang`.`harga` AS `harga`,
+--         	    `barang`.`kategori` AS `kategori` 
+-- from 
+-- 	`barang` 
+-- where 
+-- 	(`barang`.`kategori` = 'Teknologi')
+-- WITH CHECK OPTION
+
+#7. MySQL View Tutorials #7 | Cascaded dan Local Check Option :
+
+-- USE coba_trigger
+
+-- CREATE TABLE t1 (
+-- 	var int not null
+-- )
+
+-- SELECT * FROM t1
+
+-- CREATE VIEW view1 AS
+-- SELECT * FROM T1 WHERE VAR > 10
+
+-- INSERT INTO view1 (var) VALUES(5)
+-- ----------------------------------------
+-- CREATE VIEW view2 AS
+-- SELECT * FROM view1
+-- WITH cascaded CHECK OPTION
+
+-- INSERT INTO view2 (var) VALUES(12)
+-- ----------------------------------------
+-- CREATE VIEW view3 AS
+-- SELECT * FROM view2 WHERE var < 20;
+
+-- INSERT INTO view3 (var) VALUES(12)
+
+-- SHOW CREATE VIEW VIEW1
+
+-- ALTER ALGORITHM = UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view2` AS 
+-- select 
+-- 	`view1`.`var` AS `var` 
+-- from 
+-- 	`view1` WHERE var < 8
+-- WITH LOCAL CHECK OPTION
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

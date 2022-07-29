@@ -1,0 +1,47 @@
+Materi MYSQL Programmer Zaman Now, Locking :
+// Locking Record
+- START TRANSACTION
+- SELECT * FROM guestbooks
+- UPDATE guestbooks
+SET title = 'Diubah Oleh User 1'
+WHERE id = 9
+
+// Locking Record Manual
+- START TRANSACTION
+- SELECT * FROM products
+- SELECT * FROM products WHERE id = 'P0001' FOR UPDATE
+- UPDATE products
+SET quantity = quantity - 100
+WHERE id = 'P0001'
+
+// DeadLock
+USER 1 :
+- START TRANSACTION
+- SELECT * FROM products WHERE id = 'P0001' FOR UPDATE
+- SELECT * FROM products WHERE id = 'P0002' FOR UPDATE
+USER 2 :
+- START TRANSACTION
+- SELECT * FROM products WHERE id = 'P0001' FOR UPDATE
+- SELECT * FROM products WHERE id = 'P0002' FOR UPDATE
+
+// Lock Table Read
+- LOCK TABLES products READ
+- UPDATE products
+SET quantity = 100
+WHERE id = 'P0001'
+- UNLOCK TABLES
+
+// Lock Table Write
+- LOCK TABLES products WRITE
+- UPDATE products
+SET quantity = 100
+WHERE id = 'P0001'
+- SELECT * FROM products
+- UNLOCK TABLES
+
+// LOCK DISTANCE (tidak mendukung DDL(Data D))
+- LOCK INSTANCE FOR BACKUP
+- UNLOCK INSTANCE
+query ini tidak diperbolehkan jika dalam mode LOCK DISTANCE
+- ALTER TABLE products
+ADD COLUMN sample VARCHAR(100)

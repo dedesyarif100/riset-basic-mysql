@@ -1,0 +1,7 @@
+Programmer Zaman Now MYSQL, Numeric Function :
+- SELECT 10, 10, 10 * 10 AS Hasil
+- SELECT id, name, price DIV 1000 AS 'Price in K' FROM products
+
+- SELECT id, COS(price), SIN(price), TAN(price) FROM products
+- SELECT id, name, price FROM products WHERE price DIV 1000 > 15
+- SELECT AVG(quantity) AS jumlah FROM products

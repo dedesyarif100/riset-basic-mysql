@@ -1,0 +1,10 @@
+Programmer Zaman Now MYSQL, Primary Key :
+- ALTER TABLE products ADD PRIMARY KEY (id);
+- ALTER TABLE users ADD id int NOT NULL AUTO_INCREMENT;
+
+- DESCRIBE products;
+
+- SHOW CREATE TABLE products
+
+- INSERT INTO products(id, name, price, quantity) VALUES ('P0001', 'Mie Ayam Original', 15000, 100);
+- ALTER TABLE namatable DROP PRIMARY KEY

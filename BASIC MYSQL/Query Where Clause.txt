@@ -1,0 +1,9 @@
+Programmer Zaman Now MYSQL, Where Clause :
+- INSERT INTO products (id, name, price, quantity) 
+VALUES ('P0001', 'Mie Ayam Original', 15000, 100)
+
+- SELECT * FROM products WHERE price = 15000
+- SELECT * FROM products WHERE id = 'P0001'
+- SELECT * FROM products WHERE name = 'mie ayam bakso'
+- SELECT * FROM products WHERE price < 20000
+- SELECT * FROM products WHERE price < 20000 && price > 10000

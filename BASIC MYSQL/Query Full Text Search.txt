@@ -1,0 +1,18 @@
+Materi MYSQL Programmer Zaman Now, Full Text Search :
+- ALTER TABLE products ADD FULLTEXT product_fulltext (name, description)
+- ALTER TABLE PRODUCTS DROP INDEX PRODUCT_FULLTEXT
+// Jika ingin drop query FULLTEXT dari kolom, maka harus memanggil INDEXNYA seperti query diatas
+
+- SELECT * FROM products WHERE name LIKE '%ayam%' OR description LIKE '%ayam%'
+
+- SELECT * FROM products 
+WHERE MATCH(name, description) 
+AGAINST('ayam' IN NATURAL LANGUAGE MODE)
+
+- SELECT * FROM products 
+WHERE MATCH(name, description) 
+AGAINST('+ayam -bakso' IN BOOLEAN MODE) 3, 2, 4, 7, 15, 1
+
+- SELECT * FROM products 
+WHERE MATCH(name, description) 
+AGAINST('bakso' WITH QUERY EXPANSION) 8, 5, 9, 3, 2, 4, 7, 1, 17, 18, 19, 20, 10, 11, 12, 15

@@ -1,0 +1,21 @@
+Materi MYSQL Programmer Zaman Now, String Function :
+- SELECT id,
+	LOWER(name) AS 'Name Lower',
+        UPPER(name) AS 'Name Upper',
+        LENGTH(name) AS 'Name Length',
+        LOWER(category) AS 'Kategori Lower',
+        UPPER(category) AS 'Kategori Upper',
+        LENGTH(category) AS 'Kategori Length',
+        LOWER(description) AS 'Deskripsi Lower',
+        UPPER(description) AS 'Deskripsi Upper',
+        LENGTH(description) AS 'Deskripsi Length'
+FROM products
+- SELECT CHAR_LENGTH("DEDE SYARIF") AS name
+- SELECT email, CHAR_LENGTH(email) AS namaCustomer FROM customers
+- SELECT CONCAT("DEDE ", "SYARIFUDIN ", "HIDAYAT") AS name
+- SELECT email, CONCAT(email, " | ", first_name, " | ", last_name) AS name FROM customers
+- SELECT email, CONCAT_WS(" | ", email, first_name, last_name) AS name FROM customers
+- SELECT FIELD(5, 0, 1, 5, 3, 4, 5); // hasilnya adalah 3
+
+
+Riset lebih dalam lagi, mengenai STRING FUNCTION

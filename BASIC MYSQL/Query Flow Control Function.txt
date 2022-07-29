@@ -1,0 +1,24 @@
+Materi MYSQL Programmer Zaman Now, Flow Control Function :
+Case :
+SELECT 	id, 
+	category,
+        CASE category
+        WHEN 'Makanan' THEN 'Enak'
+        WHEN 'Minuman' THEN 'Segar'
+        ELSE 'Apa itu?'
+        END AS 'Category'
+FROM products
+
+----------------------------------------------------------------------
+IF ELSE :
+SELECT 	id, 
+	price,
+	IF(price <= 15000, 'Murah', 
+		IF(price <= 20000, 'Mahal', 'Mahal Banget')
+	) AS 'Mahal?'
+FROM products
+
+----------------------------------------------------------------------
+IFNULL :
+SELECT id, name, IFNULL(description, 'Kosong') FROM products
+

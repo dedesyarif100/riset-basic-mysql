@@ -1,0 +1,6 @@
+Programmer Zaman Now MYSQL, Order By Clause :
+- SELECT * FROM products ORDER BY price
+- SELECT id, name, category FROM products ORDER BY category
+- SELECT id, name, category, price FROM products ORDER BY id ASC
+- SELECT id, name, category, price FROM products ORDER BY id DESC
+- SELECT id, name, category, price FROM products ORDER BY category ASC, price DESC

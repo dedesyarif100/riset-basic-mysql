@@ -16,6 +16,9 @@ select count(*) as aggregate from `assets`
 select distinct * from `logs` where `type` = 10
 
 
+SELECT COUNT(DISTINCT(NAME)) AS count_name FROM accounts
+
+
 select * from `users` order by `id` asc LIMIT 3
 
 
@@ -108,7 +111,17 @@ as `catatan` on `assets`.`id` = `catatan`.`asset_id`
 
 
 select * from `logs` where `notes` is NULL 
-union all (select * from `logs` where `employee_id` is null)
+union all 
+(
+	select * from `logs` where `employee_id` is null
+)
+
+
+SELECT * FROM `logs` WHERE `notes` IS NULL
+UNION ALL 
+(
+	SELECT * FROM `logs` WHERE `notes` LIKE "%LAPTOP%"
+)
 
 
 select * from `logs` where `type` = 8 and `qty_in` > 5
@@ -183,6 +196,24 @@ select * from `logs` where month(`created_at`) = '07'
 select * from `logs` where day(`created_at`) = '02'
 
 
+SELECT * FROM `logs` WHERE day(`created_at`) IN (1, 2, 3, 5, 7)
+
+
+SELECT * FROM `logs` WHERE day(`created_at`) NOT IN (1, 2, 3, 5, 7)
+
+
+SELECT * FROM `logs` WHERE 
+(DAY(`created_at`) BETWEEN 2 AND 4)
+OR 
+(DAY(`created_at`) BETWEEN 11 AND 13)
+
+
+SELECT * FROM `logs` WHERE 
+(DAY(`created_at`) NOT BETWEEN 1 AND 5) 
+AND 
+(DAY(`created_at`) NOT BETWEEN 11 AND 15)
+
+
 select * from `logs` WHERE year(`created_at`) = '2022'
 
 
@@ -214,17 +245,35 @@ where `notes` LIKE '%laptop%'
 and (`asset_id` < '5' AND `notes` LIKE '%macbook%')
 
 
-select * from `assets` 
-where (select `type` from `logs` where `logs`.`asset_id` = `assets`.`id` 
-order by `logs`.`asset_id` desc limit 1) = 10
+SELECT * FROM `assets` WHERE 
+(
+	SELECT `type` FROM `logs` 
+	WHERE `logs`.`asset_id` = `assets`.`id` 
+	ORDER BY `logs`.`asset_id` DESC LIMIT 1
+) = 10
 
 
-SELECT * FROM `assets` 
-WHERE (SELECT `type` FROM `logs` WHERE `logs`.`asset_id` = `assets`.`id`
-ORDER BY `logs`.`asset_id` DESC LIMIT 1) = 8
+SELECT * FROM `assets` WHERE 
+(
+	SELECT `type` FROM `logs` 
+	WHERE `logs`.`asset_id` = `assets`.`id` 
+	ORDER BY `logs`.`asset_id` DESC LIMIT 1
+) != 10
 
 
-select * from `logs` where `qty_in` < (select AVG(l.qty_in) from `logs` as `l`)
+SELECT * FROM `assets` WHERE 
+(
+	SELECT `type` FROM `logs` 
+	WHERE `logs`.`asset_id` = `assets`.`id` 
+	ORDER BY `logs`.`asset_id` DESC LIMIT 1
+) = 8
+
+
+SELECT * FROM `logs`
+WHERE `qty_in` <
+(
+	SELECT AVG(l.qty_in) FROM `logs` AS `l`
+)
 
 
 select * from `logs` order by `id` desc, `asset_id` asc
@@ -245,25 +294,29 @@ select * from `logs` order by RAND() LIMIT 3
 select * from `logs` order by `id` desc
 
 
-select count(id) as number_of_orders, category_id from `assets` 
-group by `category_id`
+SELECT COUNT(id) AS number_of_orders, category_id FROM `assets` 
+GROUP BY `category_id`
 
 
-select count(id) as number_of_orders, category_id from `assets` 
-group by `category_id` having `category_id` = 3
+SELECT COUNT(id) AS number_of_orders, category_id FROM `assets` 
+GROUP BY `category_id` HAVING `category_id` = 3
 
 
-select count(id) as number_of_orders, category_id from `assets` 
-group by `category_id` having `number_of_orders` BETWEEN 1 AND 10
+SELECT COUNT(id) AS number_of_orders, category_id FROM `assets` 
+GROUP BY `category_id` HAVING `number_of_orders` BETWEEN 1 AND 10
 
 
-select * from `users` group by `email` having `account_id` >= 2
+SELECT COUNT(id) AS number_of_orders, category_id FROM `assets` 
+GROUP BY `category_id` HAVING `category_id` BETWEEN 1 AND 3
 
 
-select * from `assets` group by `code` having `category_id` >= 2
+SELECT * FROM `users` GROUP BY `email` HAVING `account_id` >= 2
 
 
-select * from `assets` limit 5 offset 5
+SELECT * FROM `assets` GROUP BY `code` HAVING `category_id` >= 2
+
+
+SELECT * FROM `assets` LIMIT 5 OFFSET 5
 
 
 SELECT * FROM `assets` LIMIT 2 OFFSET 6

@@ -1,28 +1,37 @@
-select * from `sub_menu` WHERE 
+SELECT * FROM `sub_menu` WHERE 
 (
 	`sub_menu`.`menu_id` = 1 
-	AND `sub_menu`.`menu_id` is not NULL 
-	AND `created_at` is NULL 
-	OR `updated_at` is NULL
+	AND `sub_menu`.`menu_id` IS NOT NULL 
+	AND `created_at` IS NULL 
+	OR `updated_at` IS NULL
 ) 
-AND `sub_menu`.`deleted_at` is null
+AND `sub_menu`.`deleted_at` IS NULL
 ================================================================================================
 
-select `content`.*, `sub_menu`.`menu_id` as `laravel_through_key` from `content` 
-inner join `sub_menu` on `sub_menu`.`id` = `coselect * from `sub_menu` where `sub_menu`.`menu_id` = ? and `sub_menu`.`menu_id` is not null and (`created_at` is null or `updated_at` is null) and `sub_menu`.`deleted_at` is nullntent`.`sub_menu_id` 
-where `sub_menu`.`menu_id` = 1 
-and `content`.`deleted_at` is NULL 
-and `sub_menu`.`deleted_at` is NULL
+SELECT * FROM `sub_menu` WHERE 
+(
+	(`sub_menu`.`menu_id` = 1 AND `sub_menu`.`menu_id` IS NOT NULL) 
+	AND 
+	(`created_at` IS NULL OR `updated_at` IS NULL)
+) 
+AND `sub_menu`.`deleted_at` IS NULL
 ================================================================================================
 
-select * from `sub_menu` 
-where `sub_menu`.`menu_id` = 1 
-and `sub_menu`.`menu_id` is not NULL 
+SELECT `content`.*, `sub_menu`.`menu_id` AS `laravel_through_key` FROM `content` 
+INNER JOIN `sub_menu` ON `sub_menu`.`id` = `content`.`sub_menu_id` 
+WHERE `sub_menu`.`menu_id` = 1 
+AND `content`.`deleted_at` IS NULL 
+AND `sub_menu`.`deleted_at` IS NULL
+================================================================================================
+
+SELECT * FROM `sub_menu` 
+WHERE `sub_menu`.`menu_id` = 1 
+AND `sub_menu`.`menu_id` IS NOT NULL 
 AND 
 (
-	`created_at` is null or `updated_at` is NULL
+	`created_at` IS NULL OR `updated_at` IS NULL
 ) 
-and `sub_menu`.`deleted_at` is null
+AND `sub_menu`.`deleted_at` IS NULL
 ================================================================================================
 
 select * from `sub_menu` 
@@ -30,80 +39,87 @@ where `sub_menu`.`menu_id` = 1
 and `sub_menu`.`deleted_at` is NULL
 ================================================================================================
 
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-and `menu`.`deleted_at` is NULL
+	SELECT * FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+AND `menu`.`deleted_at` IS NULL
 ================================================================================================
 
-select * from `menu` WHERE 
+SELECT * FROM `menu` WHERE
 (
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
->= 3 and `menu`.`deleted_at` is null
+	SELECT COUNT(*) FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+>= 3 AND `menu`.`deleted_at` IS NULL
 ================================================================================================
 
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and EXISTS 
+	SELECT * FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND EXISTS
 	(
-		select * from `content` 
-		where `sub_menu`.`id` = `content`.`sub_menu_id` 
-		and `content`.`deleted_at` is NULL
-	) 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-and `menu`.`deleted_at` is NULL
+		SELECT * FROM `content`
+		WHERE `sub_menu`.`id` = `content`.`sub_menu_id`
+		AND `content`.`deleted_at` IS NULL
+	)
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+AND `menu`.`deleted_at` IS NULL
 ================================================================================================
 
-select * from `sub_menu` where EXISTS 
+SELECT * FROM `sub_menu` WHERE EXISTS
 (
-	select * from `content` 
-	where `sub_menu`.`id` = `content`.`sub_menu_id` 
-	and `content`.`deleted_at` is NULL
-) 
-and `sub_menu`.`deleted_at` is NULL
+	SELECT * FROM `content`
+	WHERE `sub_menu`.`id` = `content`.`sub_menu_id`
+	AND `content`.`deleted_at` IS NULL
+)
+AND `sub_menu`.`deleted_at` IS NULL
 ================================================================================================
-
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `name` LIKE '%calling%' 
-	and `updated_at` is NULL 
-	and `id` = 3 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-and `menu`.`deleted_at` is NULL
-================================================================================================
-
+	SELECT * FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND `name` LIKE '%calling%'
+	AND `updated_at` IS NULL
+	AND `id` = 3
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-
-
-================================================================================================
-
-
-================================================================================================
-
-
-================================================================================================
-
-
-
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` and `id` = 3 and `sub_menu`.`deleted_at` is NULL
-) 
-and `menu`.`deleted_at` is null
+	SELECT * FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND `name` LIKE '%calling%'
+	AND `updated_at` IS NULL
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+AND `menu`.`deleted_at` IS NULL
+
+================================================================================================
+
+
+================================================================================================
+
+
+================================================================================================
+
+
+================================================================================================
+SELECT * FROM `menu` WHERE EXISTS
+(
+	SELECT * FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id` 
+	AND `id` = 3
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
 select * from `menu` where EXISTS 
@@ -116,662 +132,662 @@ select * from `menu` where EXISTS
 and `menu`.`deleted_at` is NULL 
 
 ================================================================================================
-select * from `menu` WHERE 
+SELECT * FROM `menu` WHERE
 (
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `name` LIKE '%visa%' 
-	and `sub_menu`.`deleted_at` is NULL
-) 
->= 3 and `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND `name` LIKE '%visa%'
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+>= 3 AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS 
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `updated_at` is NULL 
-	and `sub_menu`.`deleted_at` is NULL
+	SELECT * FROM `sub_menu` 
+	WHERE `menu`.`id` = `sub_menu`.`menu_id` 
+	AND `updated_at` IS NULL 
+	AND `sub_menu`.`deleted_at` IS NULL
 ) 
-and `menu`.`deleted_at` is null
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS 
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `created_at` is not NULL 
-	and `sub_menu`.`deleted_at` IS NULL
+	SELECT * FROM `sub_menu` 
+	WHERE `menu`.`id` = `sub_menu`.`menu_id` 
+	AND `created_at` IS NOT NULL 
+	AND `sub_menu`.`deleted_at` IS NULL
 ) 
-and `menu`.`deleted_at` is null
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS 
 (
-	select * from `content` 
-	where `menu`.`id` = `content`.`menu_id` 
-	and `sub_title` LIKE '%software%' 
-	and `content`.`deleted_at` is NULL
+	SELECT * FROM `content` 
+	WHERE `menu`.`id` = `content`.`menu_id` 
+	AND `sub_title` LIKE '%software%' 
+	AND `content`.`deleted_at` IS NULL
 ) 
-and `menu`.`deleted_at` is null
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `sub_menu` where EXISTS 
+SELECT * FROM `sub_menu` WHERE EXISTS
 (
-	select * from `content` 
-	where `sub_menu`.`id` = `content`.`sub_menu_id` 
-	and `sub_title` LIKE '%software%' 
-	and `content`.`deleted_at` is NULL
-) 
-and `sub_menu`.`deleted_at` is null
+	SELECT * FROM `content`
+	WHERE `sub_menu`.`id` = `content`.`sub_menu_id`
+	AND `sub_title` LIKE '%software%'
+	AND `content`.`deleted_at` IS NULL
+)
+AND `sub_menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `sub_menu` where EXISTS 
+SELECT * FROM `sub_menu` WHERE EXISTS 
 (
-	select * from `content` 
-	where `sub_menu`.`id` = `content`.`sub_menu_id` 
-	and `sub_title` not LIKE '%software%' 
-	and `content`.`deleted_at` is NULL
+	SELECT * FROM `content` 
+	WHERE `sub_menu`.`id` = `content`.`sub_menu_id` 
+	AND `sub_title` NOT LIKE '%software%' 
+	AND `content`.`deleted_at` IS NULL
 ) 
-and `sub_menu`.`deleted_at` is null
+AND `sub_menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` where EXISTS 
+SELECT * FROM `menu` WHERE EXISTS
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	AND EXISTS 
+	SELECT * FROM `sub_menu`
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND EXISTS
 	(
-		select * from `content` 
-		where `sub_menu`.`id` = `content`.`sub_menu_id` 
-		and `sub_title` not LIKE '%software%' 
-		and `content`.`deleted_at` is NULL
-	) 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-and `menu`.`deleted_at` is NULL
+		SELECT * FROM `content`
+		WHERE `sub_menu`.`id` = `content`.`sub_menu_id`
+		AND `sub_title` NOT LIKE '%software%'
+		AND `content`.`deleted_at` IS NULL
+	)
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` where not EXISTS 
+SELECT * FROM `menu` WHERE NOT EXISTS 
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
+	SELECT * FROM `sub_menu` 
+	WHERE `menu`.`id` = `sub_menu`.`menu_id` 
+	AND `sub_menu`.`deleted_at` IS NULL
 ) 
-and `menu`.`deleted_at` is null
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `sub_menu` where not EXISTS 
+SELECT * FROM `sub_menu` WHERE NOT EXISTS 
 (
-	select * from `content` 
-	where `sub_menu`.`id` = `content`.`sub_menu_id` 
-	and `content`.`deleted_at` is NULL
+	SELECT * FROM `content` 
+	WHERE `sub_menu`.`id` = `content`.`sub_menu_id` 
+	AND `content`.`deleted_at` IS NULL
 ) 
-and `sub_menu`.`deleted_at` is null
+AND `sub_menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` where not EXISTS 
+SELECT * FROM `menu` WHERE NOT EXISTS 
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `name` LIKE '%calling%' 
-	and `sub_menu`.`deleted_at` is NULL
+	SELECT * FROM `sub_menu` 
+	WHERE `menu`.`id` = `sub_menu`.`menu_id` 
+	AND `name` LIKE '%calling%' 
+	AND `sub_menu`.`deleted_at` IS NULL
 ) 
-and `menu`.`deleted_at` is null
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` where not EXISTS 
+SELECT * FROM `menu` WHERE NOT EXISTS 
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `name` not LIKE '%calling%' 
-	and `sub_menu`.`deleted_at` is NULL
+	SELECT * FROM `sub_menu` 
+	WHERE `menu`.`id` = `sub_menu`.`menu_id` 
+	AND `name` NOT LIKE '%calling%' 
+	AND `sub_menu`.`deleted_at` IS NULL
 ) 
-and `menu`.`deleted_at` is null
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu` WHERE NOT EXISTS 
+SELECT * FROM `menu` WHERE NOT EXISTS
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	AND EXISTS 
+	SELECT * FROM `sub_menu` 
+	WHERE `menu`.`id` = `sub_menu`.`menu_id`
+	AND EXISTS
 	(
-		select * from `content` 
-		where `sub_menu`.`id` = `content`.`sub_menu_id` 
-		and `description` LIKE '%Software%' 
-		and `content`.`deleted_at` is NULL
-	) 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-and `menu`.`deleted_at` is null
+		SELECT * FROM `content`
+		WHERE `sub_menu`.`id` = `content`.`sub_menu_id`
+		AND `description` LIKE '%software%'
+		AND `content`.`deleted_at` IS NULL
+	)
+	AND `sub_menu`.`deleted_at` IS NULL
+)
+AND `menu`.`deleted_at` IS NULL
 
 ================================================================================================
-select * from `menu_news` WHERE 
+SELECT * FROM menu_news WHERE
 (
 	(
-		`menu_news`.`menunews_type` = 'MenuModel' 
-		and EXISTS 
+		menu_news.menunews_type = 'MenuModel'
+		AND EXISTS
 		(
-			select * from `menu` 
-			where `menu_news`.`menunews_id` = `menu`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `menu`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'NewsModel' 
-		and EXISTS 
-		(
-			SELECT * from `news` 
-			where `menu_news`.`menunews_id` = `news`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `news`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'FaqModel' 
-		and EXISTS 
-		(
-			SELECT * from `faqs` 
-			where `menu_news`.`menunews_id` = `faqs`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `faqs`.`deleted_at` is NULL
+			SELECT * FROM menu
+			WHERE menu_news.menunews_id = menu.id
+			AND menu_news.title LIKE '%html%'
+			AND menu.deleted_at IS NULL
 		)
 	)
-) 
-and `menu_news`.`deleted_at` is null
-
-================================================================================================
-select * from `menu_news` WHERE 
-(
+	OR
 	(
-		`menu_news`.`menunews_type` = 'MenuModel' 
-		and not EXISTS 
+		menu_news.menunews_type = 'NewsModel'
+		AND EXISTS
 		(
-			select * from `menu` 
-			where `menu_news`.`menunews_id` = `menu`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `menu`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'NewsModel' 
-		and not EXISTS 
-		(
-			select * FROM `news` 
-			where `menu_news`.`menunews_id` = `news`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `news`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'FaqModel' 
-		and not EXISTS 
-		(
-			SELECT * FROM `faqs`   
-			where `menu_news`.`menunews_id` = `faqs`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `faqs`.`deleted_at` is NULL
+			SELECT * FROM news
+			WHERE menu_news.menunews_id = news.id
+			AND menu_news.title LIKE '%html%'
+			AND news.deleted_at IS NULL
 		)
 	)
-) 
-AND `menu_news`.`deleted_at` is NULL 
-
-================================================================================================
-select * from `menu_news` WHERE 
-(
+	OR
 	(
-		`menu_news`.`menunews_type` = 'MenuModel' 
-		and EXISTS 
+		menu_news.menunews_type = 'FaqModel'
+		AND EXISTS
 		(
-			select * from `menu` 
-			where `menu_news`.`menunews_id` = `menu`.`id` 
-			and `title` LIKE '%html%' 
-			and `menu`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'NewsModel' 
-		and EXISTS 
-		(
-			select * from `news` 
-			where `menu_news`.`menunews_id` = `news`.`id` 
-			and `content` LIKE '%html%' 
-			and `news`.`deleted_at` is NULL
+			SELECT * FROM faqs
+			WHERE menu_news.menunews_id = faqs.id
+			AND menu_news.title LIKE '%html%'
+			AND faqs.deleted_at IS NULL
 		)
 	)
-) 
-and `menu_news`.`deleted_at` is NULL
+)
+AND menu_news.deleted_at IS NULL
 
 ================================================================================================
-select distinct `menunews_type` from `menu_news`
-
-================================================================================================
-select * from `menu_news` WHERE 
+SELECT * FROM menu_news WHERE
 (
 	(
-		`menu_news`.`menunews_type` = 'MenuModel' 
-		and EXISTS 
+		menu_news.menunews_type = 'MenuModel'
+		AND NOT EXISTS
 		(
-			select * from `menu` 
-			where `menu_news`.`menunews_id` = `menu`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `menu`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'NewsModel' 
-		AND EXISTS 
-		(
-			select * from `news` 
-			where `menu_news`.`menunews_id` = `news`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `news`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'FaqModel' 
-		AND EXISTS 
-		(
-			select * from `faqs` 
-			where `menu_news`.`menunews_id` = `faqs`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `faqs`.`deleted_at` is NULL
+			SELECT * FROM menu
+			WHERE menu_news.menunews_id = menu.id
+			AND menu_news.title LIKE '%html%'
+			AND menu.deleted_at IS NULL
 		)
 	)
-) 
-and `menu_news`.`deleted_at` is null
-
-================================================================================================
-select * from `menu_news` WHERE 
-(
+	OR
 	(
-		`menu_news`.`menunews_type` = 'MenuModel' 
-		AND NOT EXISTS 
+		menu_news.menunews_type = 'NewsModel'
+		AND NOT EXISTS
 		(
-			select * from `menu` 
-			where `menu_news`.`menunews_id` = `menu`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `menu`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'NewsModel' 
-		and not EXISTS 
-		(
-			select * from `news` 
-			where `menu_news`.`menunews_id` = `news`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `news`.`deleted_at` is NULL
-		)
-	) 
-	OR 
-	(
-		`menu_news`.`menunews_type` = 'FaqModel' 
-		and not EXISTS 
-		(
-			select * from `faqs` 
-			where `menu_news`.`menunews_id` = `faqs`.`id` 
-			and `menu_news`.`title` LIKE '%html%' 
-			and `faqs`.`deleted_at` is NULL
+			SELECT * FROM news
+			WHERE menu_news.menunews_id = news.id
+			AND menu_news.title LIKE '%html%'
+			AND news.deleted_at IS NULL
 		)
 	)
-) 
-and `menu_news`.`deleted_at` is NULL
+	OR
+	(
+		menu_news.menunews_type = 'FaqModel'
+		AND NOT EXISTS
+		(
+			SELECT * FROM faqs
+			WHERE menu_news.menunews_id = faqs.id
+			AND menu_news.title LIKE '%html%'
+			AND faqs.deleted_at IS NULL
+		)
+	)
+)
+AND menu_news.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, 
+SELECT * FROM menu_news WHERE
 (
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count` from `menu` 
-where `menu`.`deleted_at` is NULL
+	(
+		menu_news.menunews_type = 'MenuModel'
+		AND EXISTS
+		(
+			SELECT * FROM menu
+			WHERE menu_news.menunews_id = menu.id
+			AND menu_news.title LIKE '%html%'
+			AND menu.deleted_at IS NULL
+		)
+	)
+	OR
+	(
+		menu_news.menunews_type = 'NewsModel'
+		AND EXISTS
+		(
+			SELECT * FROM news
+			WHERE menu_news.menunews_id = news.id
+			AND menu_news.content LIKE '%html%'
+			AND news.deleted_at IS NULL
+		)
+	)
+)
+AND menu_news.deleted_at IS NULL
 
 ================================================================================================
-SELECT `menu`.*,   
-(
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count`, 
-(
-	select count(*) from `content` 
-	where `menu`.`id` = `content`.`menu_id` 
-	and `description` LIKE '%amazing%' 
-	and `content`.`deleted_at` is NULL
-) 
-as `content_count` from `menu` 
-where `menu`.`deleted_at` is NULL
+SELECT DISTINCT `menunews_type` FROM `menu_news`
 
 ================================================================================================
-select `sub_menu`.*, 
+SELECT * FROM menu_news WHERE
 (
-	select count(*) from `menu` 
-	where `sub_menu`.`menu_id` = `menu`.`id` 
-	and `menu`.`deleted_at` is NULL
-) 
-as `menu_count`, 
-(
-	select count(*) from `content` 
-	where `sub_menu`.`id` = `content`.`sub_menu_id` 
-	and `content`.`deleted_at` IS NULL
-) 
-as `content_count` from `sub_menu` 
-where `sub_menu`.`deleted_at` is NULL
+	(
+		menu_news.menunews_type = 'MenuModel'
+		AND EXISTS
+		(
+			SELECT * FROM menu
+			WHERE menu_news.menunews_id = menu.id
+			AND menu_news.title LIKE '%html%'
+			AND menu.deleted_at IS NULL
+		)
+	)
+	OR
+	(
+		menu_news.menunews_type = 'NewsModel'
+		AND EXISTS
+		(
+			SELECT * FROM news
+			WHERE menu_news.menunews_id = news.id
+			AND menu_news.title LIKE '%html%'
+			AND news.deleted_at IS NULL
+		)
+	)
+	OR
+	(
+		menu_news.menunews_type = 'FaqModel'
+		AND EXISTS
+		(
+			SELECT * FROM faqs
+			WHERE menu_news.menunews_id = faqs.id
+			AND menu_news.title LIKE '%html%'
+			AND faqs.deleted_at IS NULL
+		)
+	)
+)
+AND menu_news.deleted_at IS NULL
 
 ================================================================================================
-select `content`.*, 
+SELECT * FROM menu_news WHERE
 (
-	select count(*) from `menu` 
-	where `content`.`menu_id` = `menu`.`id` 
-	and `menu`.`deleted_at` is NULL
-) 
-as `menu_count` from `content` 
-where `content`.`deleted_at` is NULL
+	(
+		menu_news.menunews_type = 'MenuModel'
+		AND NOT EXISTS
+		(
+			SELECT * FROM menu
+			WHERE menu_news.menunews_id = menu.id
+			AND menu_news.title LIKE '%html%'
+			AND menu.deleted_at IS NULL
+		)
+	)
+	OR
+	(
+		menu_news.menunews_type = 'NewsModel'
+		AND NOT EXISTS
+		(
+			SELECT * FROM news
+			WHERE menu_news.menunews_id = news.id
+			AND menu_news.title LIKE '%html%'
+			AND news.deleted_at IS NULL
+		)
+	)
+	OR
+	(
+		menu_news.menunews_type = 'FaqModel'
+		AND NOT EXISTS
+		(
+			SELECT * FROM faqs
+			WHERE menu_news.menunews_id = faqs.id
+			AND menu_news.title LIKE '%html%'
+			AND faqs.deleted_at IS NULL
+		)
+	)
+)
+AND menu_news.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, 
+SELECT menu.*,
 (
-	select COUNT(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `name` LIKE '%visa%' 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count`, 
-(
-	select COUNT(*) from `content` 
-	where `menu`.`id` = `content`.`menu_id` 
-	and `description` LIKE '%amazing%' 
-	and `content`.`deleted_at` is NULL
-) 
-as `content_count` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `sub_menu`.*, 
+SELECT menu.*,
 (
-	select count(*) from `menu` 
-	where `sub_menu`.`menu_id` = `menu`.`id` 
-	and `name` LIKE '%visa%' 
-	and `menu`.`deleted_at` is NULL
-) 
-as `menu_count`, 
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count,
 (
-	select count(*) from `content` 
-	where `sub_menu`.`id` = `content`.`sub_menu_id` 
-	and `description` LIKE '%amazing%' 
-	and `content`.`deleted_at` is NULL
-) 
-as `content_count` from `sub_menu` 
-where `sub_menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM content
+	WHERE menu.id = content.menu_id
+	AND content.description LIKE '%amazing%'
+	AND content.deleted_at IS NULL
+)
+AS content_count FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `content`.*, 
+SELECT sub_menu.*,
 (
-	select count(*) FROM `menu` 
-	where `content`.`menu_id` = `menu`.`id` 
-	and `name` LIKE '%visa%' 
-	and `menu`.`deleted_at` is NULL
-) 
-as `menu_count`, 
+	SELECT COUNT(*) FROM menu
+	WHERE sub_menu.menu_id = menu.id
+	AND menu.deleted_at IS NULL
+)
+AS menu_count,
 (
-	select COUNT(*) from `sub_menu` 
-	where `content`.`sub_menu_id` = `sub_menu`.`id` 
-	and `description` LIKE '%amazing%' 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count` from `content` 
-where `content`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM content
+	WHERE sub_menu.id = content.sub_menu_id
+	AND content.deleted_at IS NULL
+)
+AS content_count FROM sub_menu
+WHERE sub_menu.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, 
+SELECT content.*,
 (
-	select count(*) from `content` 
-	where `menu`.`id` = `content`.`menu_id` 
-	and `content`.`deleted_at` is NULL
-) 
-as `content_count`, 
-(
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `created_at` is NULL 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `created_at_submenu_null` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM menu
+	WHERE content.menu_id = menu.id
+	AND menu.deleted_at IS NULL
+)
+AS menu_count FROM content
+WHERE content.deleted_at IS NULL
 
 ================================================================================================
-select * from `menu` 
-where `menu`.`id` = 1 
-and `menu`.`deleted_at` is null limit 1
+SELECT menu.*,
+(
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.name LIKE '%visa%'
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count,
+(
+	SELECT COUNT(*) FROM content
+	WHERE menu.id = content.menu_id
+	AND content.description LIKE '%amazing%'
+	AND content.deleted_at IS NULL
+)
+AS content_count FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, 
+SELECT sub_menu.*,
 (
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `created_at` is NULL 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count` from `menu` 
-where `menu`.`id` IN (1, 2, 3, 4)
+	SELECT COUNT(*) FROM menu
+	WHERE sub_menu.menu_id = menu.id
+	AND menu.name LIKE '%visa%'
+	AND menu.deleted_at IS NULL
+)
+AS menu_count,
+(
+	SELECT COUNT(*) FROM content
+	WHERE sub_menu.id = content.sub_menu_id
+	AND content.description LIKE '%amazing%'
+	AND content.deleted_at IS NULL
+)
+AS content_count FROM sub_menu
+WHERE sub_menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, 
+SELECT content.*,
 (
-	select count(*) from `content` 
-	where `menu`.`id` = `content`.`menu_id` 
-	and `created_at` is NULL 
-	and `content`.`deleted_at` is NULL
-) 
-as `content_count`, 
+	SELECT COUNT(*) FROM menu
+	WHERE content.menu_id = menu.id
+	AND menu.name LIKE '%visa%'
+	AND menu.deleted_at IS NULL
+)
+AS menu_count,
 (
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `created_at` is NULL 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count` from `menu` 
-where `menu`.`id` IN (1, 2, 3, 4)
+	SELECT COUNT(*) FROM sub_menu
+	WHERE content.sub_menu_id = sub_menu.id
+	AND content.description LIKE '%amazing%'
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count FROM content
+WHERE content.deleted_at IS NULL
 
 ================================================================================================
-select `id`, `name`, 
+SELECT menu.*,
 (
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM content
+	WHERE menu.id = content.menu_id
+	AND content.deleted_at IS NULL
+)
+AS content_count,
+(
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.created_at IS NULL
+	AND sub_menu.deleted_at IS NULL
+)
+AS created_at_count_submenu_is_null FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, `name`, 
-(
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count`, 
-(
-	select count(*) from `content` 
-	where `menu`.`id` = `content`.`menu_id` 
-	and `content`.`deleted_at` is NULL
-) 
-as `content_count`, 
-(
-	select count(*) from `news` 
-	inner join `menuables` on `news`.`id` = `menuables`.`menuables_id` 
-	where `menu`.`id` = `menuables`.`menu_id` 
-	and `menuables`.`menuables_type` = 'NewsModel' 
-	and `news`.`deleted_at` is NULL
-) 
-as `news_count` from `menu` 
-where `menu`.`deleted_at` is null
+SELECT * FROM `menu` 
+WHERE `menu`.`id` = 1 
+AND `menu`.`deleted_at` IS NULL LIMIT 1
 
 ================================================================================================
-select `id`, `name`, 
+SELECT id, name,
 (
-	select count(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count`, 
-(
-	select count(*) from `content` 
-	where `menu`.`id` = `content`.`menu_id` 
-	and `content`.`deleted_at` is NULL
-) 
-as `content_count`, 
-(
-	select count(*) from `news` 
-	inner join `menuables` on `news`.`id` = `menuables`.`menuables_id` 
-	where `menu`.`id` = `menuables`.`menu_id` 
-	and `menuables`.`menuables_type` = 'FaqModel' 
-	and `news`.`deleted_at` is NULL
-) 
-as `news_count` from `menu` 
-where `menu`.`deleted_at` is null
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.created_at IS NULL
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count FROM menu
+WHERE menu.id IN (1, 2, 3, 4)
 
 ================================================================================================
-select `menu`.*, 
+SELECT id, name,
 (
-	select COUNT(*) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_count` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM content
+	WHERE menu.id = content.menu_id
+	AND content.created_at IS NULL
+	AND content.deleted_at IS NULL
+)
+AS content_count,
+(
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.created_at IS NULL
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count FROM menu
+WHERE menu.id IN (1, 2, 3, 4)
 
 ================================================================================================
-select `menu`.*, 
+SELECT id, name,
 (
-	select SUM(`sub_menu`.`quantity`) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_sum_quantity` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, 
+SELECT id, name,
 (
-	select MIN(`sub_menu`.`quantity`) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_min_quantity` from `menu` 
-where `menu`.`deleted_at` is NULL 
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count,
+(
+	SELECT COUNT(*) FROM content
+	WHERE menu.id = content.menu_id
+	AND content.deleted_at IS NULL
+)
+AS content_count,
+(
+	SELECT COUNT(*) FROM news
+	INNER JOIN menuables ON news.id = menuables.menuables_id
+	WHERE menu.id = menuables.menu_id
+	AND menuables.menuables_type = 'NewsModel'
+	AND news.deleted_at IS NULL
+)
+AS news_count FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, 
+SELECT id, name,
 (
-	select MAX(`sub_menu`.`quantity`) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_max_quantity` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count,
+(
+	SELECT COUNT(*) FROM content
+	WHERE menu.id = content.menu_id
+	AND content.deleted_at IS NULL
+)
+AS content_count,
+(
+	SELECT COUNT(*) FROM news
+	INNER JOIN menuables ON news.id = menuables.menuables_id
+	WHERE menu.id = menuables.menu_id
+	AND menuables.menuables_type = 'FaqModel'
+	AND news.deleted_at IS NULL
+)
+AS news_count FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, 
+SELECT menu.*,
 (
-	SELECT AVG(`sub_menu`.`quantity`) FROM `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_avg_quantity` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT COUNT(*) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_count FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, EXISTS
+SELECT menu.*,
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_exists` from `menu` 
-where `menu`.`deleted_at` is NULL 
+	SELECT SUM(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_sum_quantity FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `menu`.*, 
+SELECT menu.*,
 (
-	select SUM(`sub_menu`.`quantity`) FROM `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `total_quantity` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT MIN(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_min_quantity FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, 
+SELECT menu.*,
 (
-	select SUM(`sub_menu`.`quantity`) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_sum_quantity` from `menu` 
-where `menu`.`id` IN (1, 2, 3, 4)
+	SELECT MAX(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_max_quantity FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, 
+SELECT menu.*,
 (
-	select MIN(`sub_menu`.`quantity`) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_min_quantity` from `menu` 
-where `menu`.`id` IN (1, 2, 3, 4)
+	SELECT AVG(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_avg_quantity FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, 
+SELECT menu.*, EXISTS
 (
-	select MAX(`sub_menu`.`quantity`) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_max_quantity` from `menu` 
-where `menu`.`id` IN (1, 2, 3, 4)
+	SELECT * FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_exists FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, 
+SELECT menu.*,
 (
-	select AVG(`sub_menu`.`quantity`) from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_avg_quantity` from `menu` 
-where `menu`.`id` IN (1, 2, 3, 4)
+	SELECT SUM(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS total_quantity FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
-select `id`, EXISTS
+SELECT id, name,
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_exists` from `menu` 
-where `menu`.`id` IN (1, 2, 3, 4)
+	SELECT SUM(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_sum_quantity FROM menu
+WHERE menu.id IN (1, 2, 3, 4)
 
 ================================================================================================
-select `id`, `name`, EXISTS
+SELECT id, name,
 (
-	select * from `sub_menu` 
-	where `menu`.`id` = `sub_menu`.`menu_id` 
-	and `sub_menu`.`deleted_at` is NULL
-) 
-as `sub_menu_exists` from `menu` 
-where `menu`.`deleted_at` is NULL
+	SELECT MIN(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_min_quantity FROM menu
+WHERE menu.id IN (1, 2, 3, 4)
+
+================================================================================================
+SELECT id, name,
+(
+	SELECT MAX(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_max_quantity FROM menu
+WHERE menu.id IN (1, 2, 3, 4)
+
+================================================================================================
+SELECT id, name,
+(
+	SELECT AVG(quantity) FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_avg_quantity FROM menu
+WHERE menu.id IN (1, 2, 3, 4)
+
+================================================================================================
+SELECT id, name, EXISTS
+(
+	SELECT * FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_exists FROM menu
+WHERE menu.id IN (1, 2, 3, 4)
+
+================================================================================================
+SELECT id, name, EXISTS
+(
+	SELECT * FROM sub_menu
+	WHERE menu.id = sub_menu.menu_id
+	AND sub_menu.deleted_at IS NULL
+)
+AS sub_menu_exists FROM menu
+WHERE menu.deleted_at IS NULL
 
 ================================================================================================
 select * from `authors` 

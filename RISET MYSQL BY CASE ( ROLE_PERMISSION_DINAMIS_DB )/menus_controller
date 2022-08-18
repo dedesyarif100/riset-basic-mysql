@@ -875,3 +875,4 @@ select `authors`.`id`, `authors`.`name`, `book_id` from `authors`
 where `authors`.`id` in (1, 2, 3) 
 and `authors`.`deleted_at` is NULL
 
+
